@@ -7,7 +7,7 @@
         <div class="home__page-menu">
             <?php if (isAdmin()) { ?>
                 <a href="index.php?page=admin" class="home__page-menu-element">
-                    <i class="bx bxs-user-circle"></i>
+                    <i class="bx bxs-user"></i>
                     <p class="home__page-menu-element-header">Admin</p>
                     <p class="home__page-menu-element-description">
                         Panel d'administrateur
