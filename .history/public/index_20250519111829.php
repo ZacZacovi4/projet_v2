@@ -13,8 +13,8 @@ $routes = [
       'login' => ['model' => 'user/login', 'template' => 'user/login'],
       'register' => ['model' => 'user/register', 'template' => 'user/register'],
       'menu' => ['model' => 'user/menu', 'template' => 'user/menu', 'auth' => true],
-      'admin' => ['model' => 'user/admin', 'template' => 'admin/admin', 'auth' => true],
-      'logout' => ['model' => 'user/logout'],
+      'logout' => ['model' => 'user/logout',],
+
 ];
 
 // Récupération du paramètre page, valeur par défaut “home” operateur de coalescence des nulls, ça remplace :

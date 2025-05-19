@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //     "role" => $user["role_id"],
         //     "first_name" => $user["user_first_name"],
         // ];
-        $_SESSION["user_id"] = $user["user_id"];
+        $_SESSION["id"] = $user["user_id"];
         $_SESSION["role"] = $user["role_id"];
         $_SESSION["first_name"] = $user["user_first_name"];
         redirect("index.php?page=menu");
