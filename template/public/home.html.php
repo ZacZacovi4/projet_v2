@@ -3,13 +3,13 @@
   <button class="btn__carousel" id="next">&#10097;</button>
   <ul>
     <li class="slide__carousel">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_1.webp" alt="" />
+      <img class="slide__carousel-image" src="asset/image/img_carousel_1.webp" alt="" />
     </li>
     <li class="slide__carousel active">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_5.jpg" alt="" />
+      <img class="slide__carousel-image" src="asset/image/img_carousel_5.jpg" alt="" />
     </li>
     <li class="slide__carousel">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_6.avif" alt="" />
+      <img class="slide__carousel-image" src="asset/image/img_carousel_6.avif" alt="" />
     </li>
   </ul>
 </div>
@@ -18,7 +18,7 @@
   <section class="match__section container">
     <div class="match__content">
       <div class="match__image-wrapper">
-        <img src="assets/images/img_section match_1.jpg" alt="" class="match__image" />
+        <img src="asset/image/img_section match_1.jpg" alt="" class="match__image" />
       </div>
       <div class="match__description">
         <div class="match__date">
@@ -43,7 +43,7 @@
     </div>
     <div class="match__content">
       <div class="match__image-wrapper">
-        <img src="assets/images/img_section match_1.jpg" alt="" class="match__image" />
+        <img src="asset/image/img_section match_1.jpg" alt="" class="match__image" />
       </div>
       <div class="match__description">
         <div class="match__date">
@@ -68,7 +68,7 @@
     </div>
     <div class="match__content">
       <div class="match__image-wrapper">
-        <img src="assets/images/img_section match_1.jpg" alt="" class="match__image" />
+        <img src="asset/image/img_section match_1.jpg" alt="" class="match__image" />
       </div>
       <div class="match__description">
         <div class="match__date">
