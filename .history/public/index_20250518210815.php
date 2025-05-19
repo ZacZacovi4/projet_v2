@@ -1,0 +1,36 @@
+<?php
+require_once __DIR__ . "/../include/function.php";
+require_once __DIR__ . "/../include/connect.php";
+require_once __DIR__ . "/../include/auth.php";
+echo password_hash("111", PASSWORD_DEFAULT);
+// echo password_hash("123", PASSWORD_DEFAULT);
+// Définition de la “table de routage”
+session_start();
+$routes = [
+      'home' => ['model' => 'public/home', 'template' => 'public/home'],
+      'login' => ['model' => 'user/login', 'template' => 'user/login'],
+      'register' => ['model' => 'user/register', 'template' => 'user/register'],
+      'menu' => ['model' => 'user/menu', 'template' => 'user/menu'],
+      'logout' => ['model' => 'user/logout',],
+
+];
+
+// Récupération du paramètre page, valeur par défaut “home” operateur de coalescence des nulls, ça remplace :
+// $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page = $_GET['page'] ?? 'home';
+
+
+// si la route existe on inclut, sinon 404
+if (isset($routes[$page])) {
+      $route = $routes[$page];
+      if (!empty($route['model'])) {
+            require_once __DIR__ . "/../model/{$route['model']}.php";
+      }
+      require_once __DIR__ . '/../template/partial/_header.html.php';
+      if (!empty($route["template"])) {
+            require_once __DIR__ . "/../template/{$route['template']}.html.php";
+      }
+      require_once __DIR__ . '/../template/partial/_footer.html.php';
+} else {
+      include __DIR__ . '/../template/public/404.html.php';
+}
