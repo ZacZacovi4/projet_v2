@@ -26,18 +26,18 @@
                 </button>
                 <!-- Nom du site ou logo cliquable -->
                 <div class="navbar__brand">
-                    <a href="accueil.html">Logo</a>
+                    <a href="index.php?page=home">Logo</a>
                 </div>
                 <!-- Menu principal avec ancres vers les sections -->
                 <ul class="navbar__menu">
                     <li class="navbar__item">
-                        <a class="navbar__link" href="accueil.html">Accueil</a>
+                        <a class="navbar__link" href="index.php?page=home">Accueil</a>
                     </li>
                     <li class="navbar__item">
-                        <a class="navbar__link" href="apropos.html">Club</a>
+                        <a class="navbar__link" href="index.php?page=about">Club</a>
                     </li>
                     <li class="navbar__item">
-                        <a class="navbar__link" href="espace_vente.html">Espace vente</a>
+                        <a class="navbar__link" href="index.php?page=showroom">Espace vente</a>
                     </li>
                     <li class="navbar__item">
                         <a class="navbar__link" href="#ref4">Contactez nous</a>

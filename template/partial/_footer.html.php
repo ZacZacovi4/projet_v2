@@ -3,7 +3,7 @@
     <div class="footer__content container">
         <!-- Logo pied de page -->
         <div class="footer__brand">
-            <a href="accueil.html">Logo</a>
+            <a href="index.php?page=home">Logo</a>
         </div>
 
         <!-- Icônes des réseaux sociaux -->
