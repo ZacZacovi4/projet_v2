@@ -20,7 +20,8 @@ ON e.event_type_id = et.event_type_id
 JOIN clubs AS c
 ON e.club_id = c.club_id
 WHERE DATE(event_date) >= CURRENT_DATE
-ORDER BY event_date ASC LIMIT :limit";
+ORDER BY event_date ASC LIMIT :limit
+";
 
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':limit', $nbPerPage, PDO::PARAM_INT);

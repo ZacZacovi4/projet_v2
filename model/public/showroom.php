@@ -19,7 +19,8 @@ ON e.event_type_id = et.event_type_id
 JOIN clubs AS c
 ON e.club_id = c.club_id
 WHERE DATE(event_date) >= CURRENT_DATE
-ORDER BY event_date ASC";
+ORDER BY event_date ASC
+";
 
 $stmt = $db->prepare($sql);
 $stmt->execute();

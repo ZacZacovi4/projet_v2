@@ -34,152 +34,34 @@
         <div class="about__team-list-title">
             <h2>Les Equipes de Notre Club</h2>
         </div>
-        <div class="about__team-item">
-            <div class="about__team-item-title">
-                <h3>Nom d'équipe</h3>
-            </div>
-            <div class="about__team-item-content">
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
-                        </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
+        <?php foreach ($recordset as $raw): ?>
+            <div class="about__team-item">
+                <div class="about__team-item-title">
+                    <h3><?= 'Les ' . $raw['team_name'] ?></h3>
                 </div>
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
+                <div class="about__team-item-content">
+                    <?php foreach ($raw['players'] as $player): ?>
+                        <div class="about__team-player">
+                            <div class="about__player-photo-wrapper">
+                                <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
+                            </div>
+                            <div class="about__team-player-info">
+                                <div class="about__team-player-name">
+                                    <h4><?= $player['player_names'] ?></h4>
+                                </div>
+                                <div class="about__team-player-bio">
+                                    <p>
+                                        <?= $player['player_biography'] ?>
+                                    </p>
+                                </div>
+                                <div class="about__team-player-rank">
+                                    <p><strong>Classement :</strong> numéro <?= $player['player_rank'] ?> français</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </div>
-        <div class="about__team-item">
-            <div class="about__team-item-title">
-                <h3>Nom d'équipe</h3>
-            </div>
-            <div class="about__team-item-content">
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
-                        </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
-                        </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="about__team-item">
-            <div class="about__team-item-title">
-                <h3>Nom d'équipe</h3>
-            </div>
-            <div class="about__team-item-content">
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
-                        </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about__team-player">
-                    <div class="about__player-photo-wrapper">
-                        <img src="assets/images/photo_player_1.avif" alt="" class="about__player-photo" />
-                    </div>
-                    <div class="about__team-player-info">
-                        <div class="about__team-player-name">
-                            <h4>John Doe</h4>
-                        </div>
-                        <div class="about__team-player-bio">
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                                perspiciatis asperiores laboriosam natus aut ut doloremque
-                                cupiditate laudantium reiciendis. Nobis officiis facere,
-                                sint debitis earum labore dolores rerum vero sed.
-                            </p>
-                        </div>
-                        <div class="about__team-player-rank">
-                            <p><strong>Classement :</strong> numéro 128 français</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </section>
 </main>
