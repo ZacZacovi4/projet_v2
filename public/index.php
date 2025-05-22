@@ -10,8 +10,8 @@ require_once __DIR__ . "/../include/auth.php";
 // Définition des routes avec un flag 'auth' pour les pages protégées
 $routes = [
       'home' => ['model' => 'public/home', 'template' => 'public/home'],
-      'about' => ['model' => 'user/about', 'template' => 'public/about'],
-      'showroom' => ['model' => 'user/showroom', 'template' => 'public/showroom'],
+      'about' => ['model' => 'public/about', 'template' => 'public/about'],
+      'showroom' => ['model' => 'public/showroom', 'template' => 'public/showroom'],
       'login' => ['model' => 'user/login', 'template' => 'user/login'],
       'register' => ['model' => 'user/register', 'template' => 'user/register'],
       'menu' => ['model' => 'user/menu', 'template' => 'user/menu', 'auth' => true],
