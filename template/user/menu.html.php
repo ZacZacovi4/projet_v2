@@ -14,35 +14,35 @@
                     </p>
                 </a>
             <?php } ?>
-            <a href="profil_utilisateur.html" class="home__page-menu-element">
+            <a href="index.php?page=userProfile" class="home__page-menu-element">
                 <i class="bx bxs-user"></i>
                 <p class="home__page-menu-element-header">Mon Profil</p>
                 <p class="home__page-menu-element-description">
                     Modifier les informations de mon compte
                 </p>
             </a>
-            <a href="réservation_utilisateur.html" class="home__page-menu-element">
+            <a href="index.php?page=reservation" class="home__page-menu-element">
                 <i class="bx bxs-calendar"></i>
                 <p class="home__page-menu-element-header">Mes Réservations</p>
                 <p class="home__page-menu-element-description">
                     Télécharger et gérer mes billets
                 </p>
             </a>
-            <a href="commandes_utilisateur.html" class="home__page-menu-element">
+            <a href="index.php?page=order" class="home__page-menu-element">
                 <i class="bx bxs-cart"></i>
                 <p class="home__page-menu-element-header">Mes Commandes</p>
                 <p class="home__page-menu-element-description">
                     Voir mes commandes
                 </p>
             </a>
-            <a href="mode_payements_utilisateur.html" class="home__page-menu-element">
+            <a href="index.php?page=payementMethod" class="home__page-menu-element">
                 <i class="bx bxs-credit-card"></i>
                 <p class="home__page-menu-element-header">Mes moyens de paiement</p>
                 <p class="home__page-menu-element-description">
                     Gérer mes moyens de paiement
                 </p>
             </a>
-            <a href="amis_utilisateur.html" class="home__page-menu-element">
+            <a href="index.php?page=friend" class="home__page-menu-element">
                 <i class="bx bxs-group"></i>
                 <p class="home__page-menu-element-header">Mes Amis</p>
                 <p class="home__page-menu-element-description">

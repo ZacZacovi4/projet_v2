@@ -15,6 +15,11 @@ $routes = [
       'login' => ['model' => 'user/login', 'template' => 'user/login'],
       'register' => ['model' => 'user/register', 'template' => 'user/register'],
       'menu' => ['model' => 'user/menu', 'template' => 'user/menu', 'auth' => true],
+      'order' => ['model' => 'user/order', 'template' => 'user/order', 'auth' => true],
+      'reservation' => ['model' => 'user/reservation', 'template' => 'user/reservation', 'auth' => true],
+      'userProfile' => ['model' => 'user/userProfile', 'template' => 'user/userProfile', 'auth' => true],
+      'payementMethod' => ['model' => 'user/payementMethod', 'template' => 'user/payementMethod', 'auth' => true],
+      'friend' => ['model' => 'user/friend', 'template' => 'user/friend', 'auth' => true],
       'admin' => ['model' => 'user/admin', 'template' => 'admin/admin', 'auth' => true],
       'logout' => ['model' => 'user/logout'],
 ];
