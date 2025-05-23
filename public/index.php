@@ -21,6 +21,10 @@ $routes = [
       'payementMethod' => ['model' => 'user/payementMethod', 'template' => 'user/payementMethod', 'auth' => true],
       'friend' => ['model' => 'user/friend', 'template' => 'user/friend', 'auth' => true],
       'admin' => ['model' => 'admin/admin', 'template' => 'admin/admin', 'auth' => true],
+      'ctpManagement' => ['model' => 'admin/ctpManagement', 'template' => 'admin/ctpManagement', 'auth' => true],
+      'eventManagement' => ['model' => 'admin/eventManagement', 'template' => 'admin/eventManagement', 'auth' => true],
+      'reservationManagement' => ['model' => 'admin/reservationManagement', 'template' => 'admin/reservationManagement', 'auth' => true],
+      'userManagement' => ['model' => 'admin/userManagement', 'template' => 'admin/userManagement', 'auth' => true],
       'logout' => ['model' => 'user/logout'],
 ];
 

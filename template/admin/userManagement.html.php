@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="sidebar__menu-element">
-                    <a href="index.php?page=userManagement" class="menu__list-element-ref">
+                    <a href="index.php?page=userManagement" class="menu__list-element-ref user__icone-active">
                         <i class="bx bxs-group"></i>
                         <span class="sidebar__nav-item">Utilisateurs</span>
                     </a>

@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li class="sidebar__menu-element">
-                    <a href="index.php?page=reservationManagement" class="menu__list-element-ref">
+                    <a href="index.php?page=reservationManagement" class="menu__list-element-ref user__icone-active">
                         <i class="bx bxs-calendar"></i>
                         <span class="sidebar__nav-item">Réservations</span>
                     </a>
