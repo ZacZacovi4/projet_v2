@@ -9,7 +9,7 @@
                     </a>
                 </li>
                 <li class="sidebar__menu-element">
-                    <a href="index.php?page=userProfile" class="menu__list-element-ref">
+                    <a href="index.php?page=userProfile" class="menu__list-element-ref user__icone-active">
                         <i class="bx bxs-user"></i>
                         <span class="sidebar__nav-item">Evénements</span>
                     </a>

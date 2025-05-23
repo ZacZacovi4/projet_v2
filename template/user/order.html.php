@@ -32,7 +32,7 @@
                 <li class="sidebar__menu-element">
                     <a href="index.php?page=reservation" class="menu__list-element-ref">
                         <i class="bx bxs-calendar"></i>
-                        <span class="sidebar__nav-item">Mes&nbspRéservation</span>
+                        <span class="sidebar__nav-item">Mes&nbspRéservations</span>
                     </a>
                 </li>
                 <li class="sidebar__menu-element">
