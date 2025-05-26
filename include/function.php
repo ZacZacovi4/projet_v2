@@ -21,3 +21,8 @@ function formatData($data)
 
     return ucfirst($formatter->format($dt));
 }
+
+function hsc($string)
+{
+    return (is_null($string) ? "" : htmlspecialchars($string));
+}

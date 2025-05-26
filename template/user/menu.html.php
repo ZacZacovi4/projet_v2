@@ -2,7 +2,7 @@
     <div class="home__page-container container">
         <div class="home__page-header-wrapper">
             <h1 class="home__page-header">Bonjour <?php if (isLoggedIn())
-                echo $_SESSION['first_name']; ?></h1>
+                echo hsc($_SESSION['first_name']); ?></h1>
         </div>
         <div class="home__page-menu">
             <?php if (isAdmin()) { ?>

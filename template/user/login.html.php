@@ -10,7 +10,7 @@
         </p>
       </div>
       <?php if (isset($error))
-        echo "<p>$error</p>"; ?>
+        echo "<p>" . hsc($error) . "</p>"; ?>
       <form action="index.php?page=login" method="post" class="login__form">
         <div class="login__form-group">
           <label for="email" class="login__label">Email*</label>
