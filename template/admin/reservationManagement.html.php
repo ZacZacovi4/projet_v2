@@ -1,5 +1,19 @@
 <main>
     <div class="user__sidebar">
+        <div class="user__sidebar-top">
+            <div class="user__sidebar-logo">
+                <i class="bx bx-tennis-ball"></i>
+                <span>MNS&nbspPadel&nbspClub</span>
+            </div>
+            <i class="bx bx-menu" id="sidebar__btn"></i>
+        </div>
+        <div class="user__sidebar-user">
+            <img src="assets/images/photo_player_1.avif" alt="profile-img" class="sidebar__user-img" />
+            <div class="sidebar__user-info">
+                <p class="sidebar__user-name">User</p>
+                <p class="sidebar__user-function">Admin</p>
+            </div>
+        </div>
         <div class="sidebar__user-menu">
             <ul class="sidebar__user-menu-list">
                 <li class="sidebar__menu-element">

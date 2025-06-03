@@ -6,7 +6,7 @@
         <?php foreach ($events as $event): ?>
             <div class="match__content">
                 <div class="match__image-wrapper">
-                    <img src="assets/images/img_section match_1.jpg" alt="" class="match__image" />
+                    <img src="assets/images/img_section_match_1.jpg" alt="" class="match__image" />
                 </div>
                 <div class="match__description">
                     <div class="match__date">

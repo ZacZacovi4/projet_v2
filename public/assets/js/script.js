@@ -71,3 +71,39 @@ let sidebar = document.querySelector(".user__sidebar");
 btn_sidebar.onclick = function () {
   sidebar.classList.toggle("active");
 };
+
+// =============================
+// ==== GESTION EVENEMENTS =====
+// =============================
+
+// Gestion formulaire de creation d'evenements
+
+const eventCreateFormOverlay = document.getElementById(
+  "event-create__form-overlay"
+);
+const eventCreateFormOverlayOpen = document.getElementById(
+  "open__create-event-form"
+);
+const eventCreateFormOverlayClose = document.getElementById(
+  "close__create-event-form"
+);
+const eventCreateForm = document.getElementById("event-create__form");
+
+// overture du formulaire
+function openEventCreationForm() {
+  eventCreateFormOverlay.classList.add("active");
+  eventCreateFormOverlay.setAttribute("aria-hidden", "false");
+  // Ecouter la touche Échap
+  document.addEventListener("keydown", onEsc);
+}
+
+eventCreateFormOverlayOpen.addEventListener("click", openEventCreationForm);
+
+function closeEventCreationForm() {
+  eventCreateFormOverlay.classList.remove("active");
+  eventCreateFormOverlay.setAttribute("aria-hidden", "true");
+  // Unset ecouter la touche Échap
+  document.removeEventListener("click", onEsc);
+}
+
+eventCreateFormOverlayClose.addEventListener("click", closeEventCreationForm);

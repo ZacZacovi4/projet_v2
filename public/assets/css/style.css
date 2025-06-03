@@ -1394,6 +1394,157 @@ li {
 }
 
 /* ========================================= /
+/ ========================================== /
+/ ============= PAGES D'ADMIN ============== /
+/ ========================================== /
+/ ========================================= */
+
+/* ========================================= /
+/ =============== PAGE EVENT =============== /
+/ ========================================= */
+
+.admin__event-creation {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: var(--color1);
+}
+
+.admin__event-creation-heading {
+  margin-bottom: 8px;
+}
+
+.event__creation-btn {
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: var(--color2);
+  color: var(--color4);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  &:hover {
+    color: var(--color1);
+    background-color: var(--color3);
+    transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.admin__event-listing {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: var(--color1);
+}
+
+/* == FORMULAIRE DE CREATION D'EVENEMENT == */
+
+.admin__event-creation-overlay {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* Quand on veut afficher le modal */
+.admin__event-creation-overlay.active {
+  display: flex;
+}
+
+.event-creation-overlay-content {
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--color1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-creation-form-heading-wrapper {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* Bouton de fermeture */
+.button-close__create-event-form {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.event-creation-form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+
+.event-creation-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color4);
+  border-radius: 4px;
+}
+
+.event_creation-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.event-create-form-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 16px 16px 0;
+}
+
+.button-submit__create-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.button-annulation__create-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* ========================================= /
 / ======= MEDIA QUERY USERS CONTENT ======== /
 / ========================================= */
 

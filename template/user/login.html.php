@@ -5,7 +5,7 @@
       <div class="login__description">
         <p class="login__inscription-suggestion">
           Vous n'avez pas encore le compte?
-          <a href="inscription.html" class="login__link">
+          <a href="index.php?page=register" class="login__link">
             Inscrivez vous !</a>
         </p>
       </div>
