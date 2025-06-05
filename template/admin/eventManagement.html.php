@@ -77,14 +77,15 @@
                         <h2 class="event-creation-form-heading">Création d'Evénement</h2>
                     </div>
 
-                    <form action="#" id="event-create__form" class="event-creation-overlay-form" method="post">
+                    <form action="index.php?page=eventManagement" id="event-create__form"
+                        class="event-creation-overlay-form" method="POST">
 
                         <div class="event-creation-form-group">
                             <label for="creation-event-club-selection" class="event_creation-label">Club d'Accueil
                             </label>
                             <select name="club_id" id="creation-event-club-selection" class="event-creation-input"
                                 required>
-                                <option value="">-- Sélection -- </option>
+                                <option value="" disable selected>-- Sélection --</option>
                                 <?php foreach ($clubs as $club): ?>
                                     <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
                                 <?php endforeach; ?>
@@ -94,9 +95,9 @@
                         <div class="event-creation-form-group"> <label for="creation-event-event_type-selection"
                                 class="event_creation-label">Type
                                 d'Evénement</label>
-                            <select name="club_id" id="creation-event-event_type-selection" class="event-creation-input"
-                                required>
-                                <option value="">-- Sélection -- </option>
+                            <select name="event_type_id" id="creation-event-event_type-selection"
+                                class="event-creation-input" required>
+                                <option value="" disable selected>-- Sélection --</option>
                                 <?php foreach ($eventTypes as $eventType): ?>
                                     <option value="<?= hsc($eventType['event_type_id']) ?>">
                                         <?= hsc($eventType['event_type_name']) ?>
@@ -108,9 +109,9 @@
                         <div class="event-creation-form-group"> <label for="creation-event-team-selection"
                                 class="event_creation-label">Les équipes
                                 participants</label>
-                            <select name="club_id" id="creation-event-team-selection" class="event-creation-input"
-                                required>
-                                <option value="">-- Sélection -- </option>
+                            <div id="event-creation__chip-wrapper" class="event-creation__chip-wrapper"></div>
+                            <select name="teams_id[]" id="creation-event-team-selection" class="event-creation-input">
+                                <option value="" disable>-- Sélection --</option>
                                 <?php foreach ($teams as $team): ?>
                                     <option value="<?= hsc($team['team_id']) ?>"><?= hsc($team['team_name']) ?></option>
                                 <?php endforeach; ?>

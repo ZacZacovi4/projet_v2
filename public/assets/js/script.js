@@ -102,8 +102,76 @@ eventCreateFormOverlayOpen.addEventListener("click", openEventCreationForm);
 function closeEventCreationForm() {
   eventCreateFormOverlay.classList.remove("active");
   eventCreateFormOverlay.setAttribute("aria-hidden", "true");
-  // Unset ecouter la touche Échap
   document.removeEventListener("click", onEsc);
 }
 
 eventCreateFormOverlayClose.addEventListener("click", closeEventCreationForm);
+
+// fermeture du formulaire en appuyant echape
+
+function onEsc(e) {
+  if (e.key === "Escape") {
+    closeEventCreationForm();
+  }
+}
+
+// === Gestion des chips du champ de selection d'equipes ===
+
+const teamSelectChoices = document.getElementById(
+  "creation-event-team-selection"
+);
+const teamSelectChipsContainer = document.getElementById(
+  "event-creation__chip-wrapper"
+);
+
+// 1. Quand l’utilisateur choisit une option dans le <select>
+
+teamSelectChoices.addEventListener("change", function () {
+  const selectedOption = this.options[this.selectedIndex];
+  const value = selectedOption.value;
+  const label = selectedOption.text;
+
+  if (!value) {
+    // Option non valide
+    return;
+  }
+
+  // 2. Créer le chip et l’ajouter au conteneur
+
+  const chip = document.createElement("div");
+  chip.className = "event-creation__chip";
+  chip.dataset.value = value; // pour le retrouver plus tard
+
+  const chipText = document.createElement("span");
+  chipText.textContent = label;
+
+  const btnRemove = document.createElement("button");
+  btnRemove.type = "button";
+  btnRemove.innerHTML = "&times;";
+  btnRemove.title = "Supprimer"; // accesibilité
+
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = "teams_id[]";
+  hiddenInput.value = value;
+  chip.appendChild(hiddenInput);
+
+  btnRemove.addEventListener("click", () => {
+    // 3.1. Retirer le chip du DOM
+    teamSelectChipsContainer.removeChild(chip);
+
+    // 3.2. Réinsérer l’option dans le mes options
+    const newOption = document.createElement("option");
+    newOption.value = value;
+    newOption.textContent = label;
+    teamSelectChoices.appendChild(newOption);
+  });
+
+  chip.appendChild(chipText);
+  chip.appendChild(btnRemove);
+  teamSelectChipsContainer.appendChild(chip);
+
+  teamSelectChoices.removeChild(selectedOption);
+
+  teamSelectChoices.selectedIndex = 0;
+});

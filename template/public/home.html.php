@@ -1,20 +1,19 @@
-<div class="carousel">
-  <button class="btn__carousel" id="prev">&#10096;</button>
-  <button class="btn__carousel" id="next">&#10097;</button>
-  <ul>
-    <li class="slide__carousel">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_1.webp" alt="" />
-    </li>
-    <li class="slide__carousel active">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_5.jpg" alt="" />
-    </li>
-    <li class="slide__carousel">
-      <img class="slide__carousel-image" src="assets/images/img_carousel_6.avif" alt="" />
-    </li>
-  </ul>
-</div>
-
 <main>
+  <div class="carousel">
+    <button class="btn__carousel" id="prev">&#10096;</button>
+    <button class="btn__carousel" id="next">&#10097;</button>
+    <ul>
+      <li class="slide__carousel">
+        <img class="slide__carousel-image" src="assets/images/img_carousel_1.webp" alt="" />
+      </li>
+      <li class="slide__carousel active">
+        <img class="slide__carousel-image" src="assets/images/img_carousel_5.jpg" alt="" />
+      </li>
+      <li class="slide__carousel">
+        <img class="slide__carousel-image" src="assets/images/img_carousel_6.avif" alt="" />
+      </li>
+    </ul>
+  </div>
   <section class="match__section container">
     <?php foreach ($events as $event): ?>
       <div class="match__content">

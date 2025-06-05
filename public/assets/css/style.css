@@ -17,7 +17,7 @@ body {
 }
 
 main {
-  padding-top: 63px;
+  padding-top: 62px;
   min-height: calc(100vh - 72px);
 }
 
@@ -1501,6 +1501,37 @@ li {
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
+
+/* === Chips de selection d'equipe === */
+
+.event-creation__chip-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.event-creation__chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  padding: 4px 4px 4px 8px;
+}
+
+.event-creation__chip span {
+  margin-right: 6px;
+}
+
+.event-creation__chip button {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* END = Chips de selection d'equipe = END */
 
 .event-create-form-button-wrapper {
   display: flex;
