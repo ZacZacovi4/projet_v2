@@ -66,8 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt->execute($params);
 
-    var_dump($params);
-
     $lastID = $db->lastInsertId();
 
     foreach ($teams_id as $team_id):
