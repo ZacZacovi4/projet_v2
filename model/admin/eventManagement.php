@@ -34,17 +34,20 @@ $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // traitement du formulaire et l'insertion de l'evenement cré dans la base de données
 
-// if (
-//     empty($_POST['club_id']) ||
-//     empty($_POST['event_type_id']) ||
-//     empty($_POST['event_date']) ||
-//     empty($_POST['event_capacity'])
 
-// ) {
-//     die('error');
-// }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (
+        empty($_POST['club_id']) ||
+        empty($_POST['event_type_id']) ||
+        empty($_POST['event_date']) ||
+        empty($_POST['event_capacity']) ||
+        empty(array_filter($_POST['teams_id']))
+
+    ) {
+        die('error');
+    }
 
     $clubID = $_POST['club_id'];
     $eventTypeID = $_POST['event_type_id'];
@@ -64,7 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':event_capacity' => $eventCapacity,
     ];
 
-    $stmt->execute($params);
+    if ($stmt->execute($params)) {
+        echo "L’événement a été créé avec succès !";
+    } else {
+        echo "Erreur lors de la création de l’événement.";
+    }
 
     $lastID = $db->lastInsertId();
 
