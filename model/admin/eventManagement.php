@@ -34,60 +34,102 @@ $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // traitement du formulaire et l'insertion de l'evenement cré dans la base de données
 
-
+// $message = $_SESSION['message'] ?? '';
+// $messageType = $_SESSION['messageType'] ?? '';
+// unset($_SESSION['message'], $_SESSION['messageType']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if (
-        empty($_POST['club_id']) ||
-        empty($_POST['event_type_id']) ||
-        empty($_POST['event_date']) ||
-        empty($_POST['event_capacity']) ||
-        empty(array_filter($_POST['teams_id']))
-
-    ) {
-        die('error');
-    }
-
-    $clubID = $_POST['club_id'];
-    $eventTypeID = $_POST['event_type_id'];
-    $eventDate = $_POST['event_date'];
-    $eventCapacity = $_POST['event_capacity'];
+    // reçoit json de front avec les champs de formulaire et le decode
+    $data = json_decode(file_get_contents('php://input'), true);
+    // Recuperation et nettoyage de données envoyé
+    $clubID = $data['club_id'];
+    $eventTypeID = $data['event_type_id'];
+    $eventDate = $data['event_date'];
+    $eventCapacity = $data['event_capacity'];
     // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
-    $teams_id = array_filter($_POST['teams_id'], fn($v) => $v !== '');
-
-    $sql = 'INSERT INTO events (user_id, club_id, event_type_id, event_date, event_capacity) VALUES (:user_id, :club_id, :event_type_id, :event_date, :event_capacity)';
-
-    $stmt = $db->prepare($sql);
-    $params = [
-        ':user_id' => $_SESSION['user_id'],
-        ':club_id' => $clubID,
-        ':event_type_id' => $eventTypeID,
-        ':event_date' => $eventDate,
-        ':event_capacity' => $eventCapacity,
-    ];
-
-    if ($stmt->execute($params)) {
-        echo "L’événement a été créé avec succès !";
-    } else {
-        echo "Erreur lors de la création de l’événement.";
+    if (!is_array($data['teams_id[]'])) {
+        $data['teams_id[]'] = [$data['teams_id[]']];
     }
+    $teams_id = array_filter($data['teams_id[]'], fn($v) => $v !== '');
 
-    $lastID = $db->lastInsertId();
+    // Verification si on a bien reçu des données de nos champs
+    if (
+        empty($clubID) ||
+        empty($eventTypeID) ||
+        empty($eventDate) ||
+        empty($eventCapacity) ||
+        empty($teams_id)
+    ) {
 
-    foreach ($teams_id as $team_id):
-        $sql = 'INSERT INTO inscrire (event_id, team_id) VALUES (:event_id, :team_id)';
+        // $message = "Vous n'avez pas remplie tous les champs";
+        http_response_code(400);
+        // header('Content-Type: application/json');
+        // echo json_encode(['success' => true]);
+
+    } else {
+        $sql = 'INSERT INTO events (user_id, club_id, event_type_id, event_date, event_capacity) VALUES (:user_id, :club_id, :event_type_id, :event_date, :event_capacity)';
+
         $stmt = $db->prepare($sql);
         $params = [
-            ':event_id' => $lastID,
-            ':team_id' => $team_id
+            ':user_id' => $_SESSION['user_id'],
+            ':club_id' => $clubID,
+            ':event_type_id' => $eventTypeID,
+            ':event_date' => $eventDate,
+            ':event_capacity' => $eventCapacity,
         ];
-        $stmt->execute($params);
-    endforeach;
+
+        // verification si la requette est executé et les données sont bien inserés dans la base de données
+        // on utilise le block try catch parce que dans mon PDO est allumé le mode de gestion d'exceptions
+        try {
+            if ($stmt->execute($params)) {
+                // recperation de dernier id inserer dans notre base de données, vu qu'on créer un événement juste avant on aura son id avec la méthode lastInsertId.
+                $lastID = $db->lastInsertId();
+
+                foreach ($teams_id as $team_id):
+                    $sql = 'INSERT INTO inscrire (event_id, team_id) VALUES (:event_id, :team_id)';
+                    $stmt = $db->prepare($sql);
+                    $params = [
+                        ':event_id' => $lastID,
+                        ':team_id' => $team_id
+                    ];
+                    $stmt->execute($params);
+                endforeach;
+                http_response_code(200);
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+        }
+    }
 }
 
+// gestion d'affichage et de modification des evenements
 
+$sql = "SELECT 
+e.event_id, 
+e.event_date, 
+e.event_type_id, 
+et.event_type_name,
+c.club_name,
+c.club_address,
+u.user_first_name,
+  (
+    SELECT GROUP_CONCAT(t.team_name SEPARATOR ', ')
+    FROM inscrire AS i
+    JOIN teams AS t 
+    ON t.team_id = i.team_id
+    WHERE i.event_id = e.event_id
+  ) AS team_names
+FROM events AS e 
+JOIN event_types AS et 
+ON e.event_type_id = et.event_type_id 
+JOIN clubs AS c
+ON e.club_id = c.club_id
+JOIN users AS u
+ON e.user_id = u.user_id
+ORDER BY event_date ASC
+";
 
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-// exit();

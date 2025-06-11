@@ -1574,6 +1574,32 @@ li {
     transform: scale(0.95);
   }
 }
+.event__creation-message-wrapper {
+  margin-top: 16px;
+  display: none;
+}
+
+.event__creation-message-wrapper.active {
+  display: flex;
+}
+
+.event__creation-message-success {
+  display: none;
+  color: green;
+}
+
+.event__creation-message-success.active {
+  display: flex;
+}
+
+.event__creation-message-error {
+  display: none;
+  color: red;
+}
+
+.event__creation-message-error.active {
+  display: flex;
+}
 
 /* ========================================= /
 / ======= MEDIA QUERY USERS CONTENT ======== /

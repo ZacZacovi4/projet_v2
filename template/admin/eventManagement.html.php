@@ -60,11 +60,19 @@
     <div class="user__main-content">
         <div class="container__user-page">
             <div class="admin__content-header-wrapper">
-                <h1 class="admin__content-heading">Mes Evénements</h1>
+                <h1 class="admin__content-heading">Gestion des Evénements</h1>
             </div>
             <div class="admin__event-creation">
                 <h2 class="admin__event-creation-heading">Créer un nouveau Evénements</h2>
                 <button id="open__create-event-form" class="event__creation-btn">Créer</button>
+
+
+                <div class="event__creation-message-wrapper" id="event__creation-message-wrapper">
+                    <h3 class="event__creation-message-success" id="200">L'événement a été crée.</h3>
+                    <h3 class="event__creation-message-error" id="500">Une erreur est survenue lors de la création
+                        d'événement.</h3>
+                </div>
+
             </div>
             <!-- Formulaire overlay de creation d'evenement -->
             <div id="event-create__form-overlay" class="admin__event-creation-overlay">
@@ -78,13 +86,12 @@
                     </div>
 
                     <form action="index.php?page=eventManagement" id="event-create__form"
-                        class="event-creation-overlay-form" method="POST">
+                        class="event-creation-overlay-form" method="POST" onsubmit="submitEventCreationForm(event)">
 
                         <div class="event-creation-form-group">
                             <label for="creation-event-club-selection" class="event_creation-label">Club d'Accueil
                             </label>
-                            <select name="club_id" id="creation-event-club-selection" class="event-creation-input"
-                                required>
+                            <select name="club_id" id="creation-event-club-selection" class="event-creation-input">
                                 <option value="" disable selected>-- Sélection --</option>
                                 <?php foreach ($clubs as $club): ?>
                                     <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
@@ -96,7 +103,7 @@
                                 class="event_creation-label">Type
                                 d'Evénement</label>
                             <select name="event_type_id" id="creation-event-event_type-selection"
-                                class="event-creation-input" required>
+                                class="event-creation-input">
                                 <option value="" disable selected>-- Sélection --</option>
                                 <?php foreach ($eventTypes as $eventType): ?>
                                     <option value="<?= hsc($eventType['event_type_id']) ?>">
@@ -121,15 +128,15 @@
                         <div class="event-creation-form-group"> <label for="creation-event-event_date"
                                 class="event_creation-label">Date d'Evénement
                             </label>
-                            <input type="datetime-local" id="creation-event-event_date" name="event_date" required
+                            <input type="datetime-local" id="creation-event-event_date" name="event_date"
                                 class="event-creation-input" />
                         </div>
 
                         <div class="event-creation-form-group"> <label for="creation-event-event_capacity"
                                 class="event_creation-label">Capacité
                                 d'Evénement</label>
-                            <input type="number" id="creation-event-event_capacity" name="event_capacity" required
-                                min="1" class="event-creation-input" />
+                            <input type="number" id="creation-event-event_capacity" name="event_capacity" min="1"
+                                class="event-creation-input" />
                         </div>
                         <div class="event-create-form-button-wrapper">
                             <button type="close" class="button-annulation__create-event-form">Annuler</button>
