@@ -147,7 +147,35 @@
             </div>
             <div class="admin__event-listing">
                 <h2 class="admin__event-listing-heading">Vos Evénements</h2>
-
+                <div class="admin_event-table-wrapper">
+                    <table class="admin_event-table">
+                        <tr class="admin_event-table-headers">
+                            <th class="admin_event-table-header">Date</th>
+                            <th class="admin_event-table-header">Club</th>
+                            <th class="admin_event-table-header">Type</th>
+                            <th class="admin_event-table-header">Capacité</th>
+                            <th class="admin_event-table-header">Places restantes</th>
+                            <th class="admin_event-table-header">Equipes</th>
+                            <th class="admin_event-table-header">Créateur</th>
+                            <?php foreach ($events as $event): ?>
+                            </tr class="admin_event-table-fields">
+                            <td class="admin_event-table-field"><?= $event["event_date"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["club_name"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["event_type_name"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["event_capacity"]; ?></td>
+                            <td class="admin_event-table-field"><?= "28"; ?></td>
+                            <td class="admin_event-table-field"><?= $event["team_names"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["user_first_name"]; ?></td>
+                            <td class="admin_event-table-field"><a href="#"
+                                    class="admin_event-table-field-modifier">&#9998;</a>
+                            </td>
+                            <td class="admin_event-table-field"><a href="#"
+                                    class="admin_event-table-field-deleter">&times;</a>
+                            </td>
+                            </tr>
+                        <?php endforeach ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

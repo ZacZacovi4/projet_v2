@@ -360,6 +360,7 @@ li {
   margin-top: 48px;
   margin-right: auto;
   margin-left: 40px;
+  margin-bottom: 48px;
 }
 
 /* ========== Sidebar Media Querries ========== */
@@ -1599,6 +1600,42 @@ li {
 
 .event__creation-message-error.active {
   display: flex;
+}
+
+/* === Section Modification Evénement === */
+
+.admin_event-table-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin_event-table {
+  display: flex;
+  margin: 16px 0;
+  border-collapse: collapse;
+}
+
+.admin_event-table-fields {
+  &:hover {
+    background-color: rgba(240, 240, 240, 0.747);
+  }
+}
+
+.admin_event-table-header {
+  border: 1px solid var(--color4);
+  padding: 6px;
+}
+
+.admin_event-table-field {
+  background-color: rgba(212, 212, 212, 0.336);
+  border: 1px solid var(--color4);
+  padding: 6px;
+}
+
+.admin_event-table-field-deleter {
+  font-size: 24px;
+  color: red;
 }
 
 /* ========================================= /

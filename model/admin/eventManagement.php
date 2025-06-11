@@ -108,9 +108,9 @@ $sql = "SELECT
 e.event_id, 
 e.event_date, 
 e.event_type_id, 
+e.event_capacity,
 et.event_type_name,
 c.club_name,
-c.club_address,
 u.user_first_name,
   (
     SELECT GROUP_CONCAT(t.team_name SEPARATOR ', ')
