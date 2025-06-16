@@ -110,8 +110,16 @@ e.event_date,
 e.event_type_id, 
 e.event_capacity,
 et.event_type_name,
+c.club_id,
 c.club_name,
 u.user_first_name,
+  (
+    SELECT GROUP_CONCAT(t.team_id SEPARATOR ', ')
+    FROM inscrire AS i
+    JOIN teams AS t 
+    ON t.team_id = i.team_id
+    WHERE i.event_id = e.event_id
+  ) AS team_ids,
   (
     SELECT GROUP_CONCAT(t.team_name SEPARATOR ', ')
     FROM inscrire AS i

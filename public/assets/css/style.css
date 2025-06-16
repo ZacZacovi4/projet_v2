@@ -1638,6 +1638,141 @@ li {
   color: red;
 }
 
+/* === Formulaire de Modification d'événements === */
+
+.admin__event-modification-overlay {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* Quand on veut afficher le modal */
+.admin__event-modification-overlay.active {
+  display: flex;
+}
+
+.event-modification-overlay-content {
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--color1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-modification-form-heading-wrapper {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* Bouton de fermeture */
+.button-close__modification-event-form {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.event-modification-form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+
+.event-modification-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color4);
+  border-radius: 4px;
+}
+
+.event_modification-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* === Chips de selection d'equipe === */
+
+.event-modification__chip-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.event-modification__chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  padding: 4px 4px 4px 8px;
+}
+
+.event-modification__chip span {
+  margin-right: 6px;
+}
+
+.event-modification__chip button {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* END = Chips de selection d'equipe = END */
+
+.event-modification-form-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 16px 16px 0;
+}
+
+.button-submit__modification-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.button-annulation__modification-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
 /* ========================================= /
 / ======= MEDIA QUERY USERS CONTENT ======== /
 / ========================================= */

@@ -143,6 +143,8 @@ async function submitEventCreationForm(event) {
       break;
     case 200:
       closeEventCreationForm();
+      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
+      // location.reload();
       document
         .getElementById("event__creation-message-wrapper")
         .classList.add("active");
@@ -231,4 +233,158 @@ teamSelectChoices.addEventListener("change", function () {
   teamSelectChoices.removeChild(selectedOption);
 
   teamSelectChoices.selectedIndex = 0;
+});
+
+// Formulaire de modification d'événement
+
+const eventModificationFormOverlay = document.getElementById(
+  "event-modification__form-overlay"
+);
+const eventModificationFormOverlayOpen = document.getElementById(
+  "admin_event-table-field-modifier"
+);
+const eventModificationFormOverlayClose = document.getElementById(
+  "close__modification-event-form"
+);
+const eventModificationForm = document.getElementById(
+  "event-modification__form"
+);
+
+// overture du formulaire
+function openEventModificationForm() {
+  eventModificationFormOverlay.classList.add("active");
+  eventModificationFormOverlay.setAttribute("aria-hidden", "false");
+  // Ecouter la touche Échap
+  document.addEventListener("keydown", onEsc);
+}
+
+// eventModificationFormOverlayOpen.addEventListener(
+//   "click",
+//   openEventModificationForm
+//   // selectDefaultOption(clubId, "modification-event-club-selection")
+// );
+
+function closeEventModificationForm() {
+  eventModificationFormOverlay.classList.remove("active");
+  eventModificationFormOverlay.setAttribute("aria-hidden", "true");
+  document.removeEventListener("click", onEsc);
+}
+
+eventModificationFormOverlayClose.addEventListener(
+  "click",
+  closeEventModificationForm
+);
+
+// fermeture du formulaire en appuyant echape
+
+function onEsc(e) {
+  if (e.key === "Escape") {
+    closeEventModificationForm();
+  }
+}
+
+function selectDefaultOption(id, idSelect) {
+  let idSelectQuerry = document.getElementById(idSelect);
+  for (const option of idSelectQuerry.options) {
+    if (option.value == id) {
+      option.selected = true;
+      break;
+    }
+  }
+}
+
+// Recuperation des valeurs de l'evenement grace au atribut data
+document
+  .querySelectorAll(".admin_event-table-field-modifier")
+  .forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      // e.preventDefault();
+      openEventModificationForm();
+      const tr = e.target.closest("tr"); // La ligne de l'événement
+
+      const eventId = tr.dataset.id;
+      const eventDate = tr.dataset.date;
+      const clubId = tr.dataset.clubId;
+      const clubName = tr.dataset.clubName;
+      const eventTypeId = tr.dataset.typeId;
+      const eventTypeName = tr.dataset.typeName;
+      const capacity = tr.dataset.capacity;
+      const teamsId = tr.dataset.teamsId;
+      const teamsName = tr.dataset.teamsName;
+
+      // Set l'option du club d'événement par default
+      selectDefaultOption(clubId, "modification-event-club-selection");
+      // Set l'option du type d'événement par default
+      selectDefaultOption(
+        eventTypeId,
+        "modification-event-event_type-selection"
+      );
+      // Set l'option de capacité d'événement par default
+      document.getElementById("modification-event-event_capacity").value =
+        capacity;
+      // Set l'option de date d'événement par default
+      document.getElementById("modification-event-event_date").value =
+        eventDate;
+    });
+  });
+
+// Création des chips
+
+const modificationTeamSelectChoices = document.getElementById(
+  "modification-event-team-selection"
+);
+const modificationTeamSelectChipsContainer = document.getElementById(
+  "event-modification__chip-wrapper"
+);
+
+// 1. Quand l’utilisateur choisit une option dans le <select>
+
+modificationTeamSelectChoices.addEventListener("change", function () {
+  const selectedOption = this.options[this.selectedIndex];
+  const value = selectedOption.value;
+  const label = selectedOption.text;
+
+  if (!value) {
+    // Option non valide
+    return;
+  }
+
+  // 2. Créer le chip et l’ajouter au conteneur
+
+  const chip = document.createElement("div");
+  chip.className = "event-modification__chip";
+  chip.dataset.value = value; // pour le retrouver plus tard
+
+  const chipText = document.createElement("span");
+  chipText.textContent = label;
+
+  const btnRemove = document.createElement("button");
+  btnRemove.type = "button";
+  btnRemove.innerHTML = "&times;";
+  btnRemove.title = "Supprimer"; // accesibilité
+
+  const hiddenInput = document.createElement("input");
+  hiddenInput.type = "hidden";
+  hiddenInput.name = "teams_id[]";
+  hiddenInput.value = value;
+  chip.appendChild(hiddenInput);
+
+  btnRemove.addEventListener("click", () => {
+    // 3.1. Retirer le chip du DOM
+    modificationTeamSelectChipsContainer.removeChild(chip);
+
+    // 3.2. Réinsérer l’option dans le mes options
+    const newOption = document.createElement("option");
+    newOption.value = value;
+    newOption.textContent = label;
+    modificationTeamSelectChoices.appendChild(newOption);
+  });
+
+  chip.appendChild(chipText);
+  chip.appendChild(btnRemove);
+  modificationTeamSelectChipsContainer.appendChild(chip);
+
+  modificationTeamSelectChoices.removeChild(selectedOption);
+
+  modificationTeamSelectChoices.selectedIndex = 0;
 });

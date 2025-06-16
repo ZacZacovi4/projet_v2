@@ -158,23 +158,104 @@
                             <th class="admin_event-table-header">Equipes</th>
                             <th class="admin_event-table-header">Créateur</th>
                             <?php foreach ($events as $event): ?>
-                            </tr class="admin_event-table-fields">
-                            <td class="admin_event-table-field"><?= $event["event_date"]; ?></td>
-                            <td class="admin_event-table-field"><?= $event["club_name"]; ?></td>
-                            <td class="admin_event-table-field"><?= $event["event_type_name"]; ?></td>
-                            <td class="admin_event-table-field"><?= $event["event_capacity"]; ?></td>
-                            <td class="admin_event-table-field"><?= "28"; ?></td>
-                            <td class="admin_event-table-field"><?= $event["team_names"]; ?></td>
-                            <td class="admin_event-table-field"><?= $event["user_first_name"]; ?></td>
-                            <td class="admin_event-table-field"><a href="#"
-                                    class="admin_event-table-field-modifier">&#9998;</a>
-                            </td>
-                            <td class="admin_event-table-field"><a href="#"
-                                    class="admin_event-table-field-deleter">&times;</a>
-                            </td>
+                            <tr class="admin_event-table-fields" data-id="<?= $event['event_id']; ?>"
+                                data-date="<?= $event['event_date']; ?>" data-club-id="<?= $event['club_id']; ?>"
+                                data-club-name="<?= $event['club_name']; ?>" data-type-id="<?= $event['event_type_id']; ?>"
+                                data-type-name="<?= $event['event_type_name']; ?>"
+                                data-capacity="<?= $event['event_capacity']; ?>" data-teams-id="<?= $event['team_ids']; ?>"
+                                data-teams-name="<?= $event['team_names']; ?>">
+
+                                <td class="admin_event-table-field"><?= $event["event_date"]; ?></td>
+                                <td class="admin_event-table-field"><?= $event["club_name"]; ?></td>
+                                <td class="admin_event-table-field"><?= $event["event_type_name"]; ?></td>
+                                <td class="admin_event-table-field"><?= $event["event_capacity"]; ?></td>
+                                <td class="admin_event-table-field"><?= "28"; ?></td>
+                                <td class="admin_event-table-field"><?= $event["team_names"]; ?></td>
+                                <td class="admin_event-table-field"><?= $event["user_first_name"]; ?></td>
+                                <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-modifier"
+                                        id="admin_event-table-field-modifier">&#9998;</a>
+                                </td>
+                                <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-deleter"
+                                        id="admin_event-table-field-deleter">&times;</a>
+                                </td>
+
                             </tr>
                         <?php endforeach ?>
                     </table>
+                </div>
+            </div>
+            <div id="event-modification__form-overlay" class="admin__event-modification-overlay">
+                <div class="event-modification-overlay-content">
+                    <button id="close__modification-event-form" class="button-close__modification-event-form"
+                        aria-label="Fermer le formulaire">
+                        &times;
+                    </button>
+                    <div class="event-modification-form-heading-wrapper">
+                        <h2 class="event-modification-form-heading">Modification d'Evénement</h2>
+                    </div>
+
+                    <form action="index.php?page=eventManagement" id="event-modification__form"
+                        class="event-modification-overlay-form" method="POST"
+                        onsubmit="submitEventModificationForm(event)">
+
+                        <div class="event-modification-form-group">
+                            <label for="modification-event-club-selection" class="event_modification-label">Club
+                                d'Accueil
+                            </label>
+                            <select name="club_id" id="modification-event-club-selection"
+                                class="event-modification-input">
+                                <!-- <option value="" disable selected>-- Sélection --</option> -->
+                                <?php foreach ($clubs as $club): ?>
+                                    <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="event-modification-form-group"> <label for="modification-event-event_type-selection"
+                                class="event_modification-label">Type
+                                d'Evénement</label>
+                            <select name="event_type_id" id="modification-event-event_type-selection"
+                                class="event-modification-input">
+                                <!-- <option value="" disable selected>-- Sélection --</option> -->
+                                <?php foreach ($eventTypes as $eventType): ?>
+                                    <option value="<?= hsc($eventType['event_type_id']) ?>">
+                                        <?= hsc($eventType['event_type_name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="event-modification-form-group"> <label for="modification-event-team-selection"
+                                class="event_modification-label">Les équipes
+                                participants</label>
+                            <div id="event-modification__chip-wrapper" class="event-modification__chip-wrapper"></div>
+                            <select name="teams_id[]" id="modification-event-team-selection"
+                                class="event-modification-input">
+                                <!-- <option value="" disable>-- Sélection --</option> -->
+                                <?php foreach ($teams as $team): ?>
+                                    <option value="<?= hsc($team['team_id']) ?>"><?= hsc($team['team_name']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="event-modification-form-group"> <label for="modification-event-event_date"
+                                class="event_modification-label">Date d'Evénement
+                            </label>
+                            <input type="datetime-local" id="modification-event-event_date" name="event_date"
+                                class="event-modification-input" />
+                        </div>
+
+                        <div class="event-modification-form-group"> <label for="modification-event-event_capacity"
+                                class="event_modification-label">Capacité
+                                d'Evénement</label>
+                            <input type="number" id="modification-event-event_capacity" name="event_capacity" min="1"
+                                class="event-modification-input" />
+                        </div>
+                        <div class="event-modification-form-button-wrapper">
+                            <button type="close" class="button-annulation__modification-event-form">Annuler</button>
+                            <button type="submit" class="button-submit__modification-event-form">Modifier</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
