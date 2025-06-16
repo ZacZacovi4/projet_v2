@@ -294,24 +294,19 @@ function selectDefaultOption(id, idSelect) {
 }
 // création de la pré-sélection des chips pour le formulaire de modification
 function selectDefaultOptionChips(ids) {
-  // const idsArray = ids.split();
-  // const idsArray = ids;
-  console.log(ids);
+  const idsArray = ids.split(",").map((id) => id.trim());
   const Select = document.getElementById("modification-event-team-selection");
   const ChipsContainer = document.getElementById(
     "event-modification__chip-wrapper"
   );
 
-  ids.forEach((id) => {
+  idsArray.forEach((id) => {
+    // transformation string en array
     const arrayOpt = Array.from(Select.options);
+
     const option = arrayOpt.find((opt) => opt.value == id);
 
-    console.log(id);
-    console.log(arrayOpt);
-
-    console.log(option);
     if (!option) return;
-    console.log(id);
 
     const value = option.value;
     const label = option.label;
@@ -376,8 +371,6 @@ document
       const teamsId = tr.dataset.teamsId;
       const teamsName = tr.dataset.teamsName;
 
-      let teamsIdArray = teamsId.split(",").map((id) => id.trim());
-
       // Set l'option du club d'événement par default
       selectDefaultOption(clubId, "modification-event-club-selection");
       // Set l'option du type d'événement par default
@@ -386,7 +379,7 @@ document
         "modification-event-event_type-selection"
       );
       // Set l'option des équipes d'événement par default
-      selectDefaultOptionChips(teamsIdArray);
+      selectDefaultOptionChips(teamsId);
       // Set l'option de capacité d'événement par default
       document.getElementById("modification-event-event_capacity").value =
         capacity;
