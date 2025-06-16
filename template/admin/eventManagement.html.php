@@ -231,7 +231,7 @@
                             <div id="event-modification__chip-wrapper" class="event-modification__chip-wrapper"></div>
                             <select name="teams_id[]" id="modification-event-team-selection"
                                 class="event-modification-input">
-                                <!-- <option value="" disable>-- Sélection --</option> -->
+                                <option value="" disable>-- Sélection --</option>
                                 <?php foreach ($teams as $team): ?>
                                     <option value="<?= hsc($team['team_id']) ?>"><?= hsc($team['team_name']) ?></option>
                                 <?php endforeach; ?>

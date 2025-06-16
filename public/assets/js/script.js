@@ -282,7 +282,7 @@ function onEsc(e) {
     closeEventModificationForm();
   }
 }
-
+// création de la pré-sélection des options de liste déroullant pour le formulaire de modification
 function selectDefaultOption(id, idSelect) {
   let idSelectQuerry = document.getElementById(idSelect);
   for (const option of idSelectQuerry.options) {
@@ -292,6 +292,70 @@ function selectDefaultOption(id, idSelect) {
     }
   }
 }
+// création de la pré-sélection des chips pour le formulaire de modification
+function selectDefaultOptionChips(ids) {
+  // const idsArray = ids.split();
+  // const idsArray = ids;
+  console.log(ids);
+  const Select = document.getElementById("modification-event-team-selection");
+  const ChipsContainer = document.getElementById(
+    "event-modification__chip-wrapper"
+  );
+
+  ids.forEach((id) => {
+    const arrayOpt = Array.from(Select.options);
+    const option = arrayOpt.find((opt) => opt.value == id);
+
+    console.log(id);
+    console.log(arrayOpt);
+
+    console.log(option);
+    if (!option) return;
+    console.log(id);
+
+    const value = option.value;
+    const label = option.label;
+
+    // Créer le chip et l’ajouter au conteneur
+
+    const chip = document.createElement("div");
+    chip.className = "event-modification__chip";
+    chip.dataset.value = value; // pour le retrouver plus tard
+
+    const chipText = document.createElement("span");
+    chipText.textContent = label;
+
+    const btnRemove = document.createElement("button");
+    btnRemove.type = "button";
+    btnRemove.innerHTML = "&times;";
+    btnRemove.title = "Supprimer"; // accesibilité
+
+    const hiddenInput = document.createElement("input");
+    hiddenInput.type = "hidden";
+    hiddenInput.name = "teams_id[]";
+    hiddenInput.value = value;
+    chip.appendChild(hiddenInput);
+
+    btnRemove.addEventListener("click", () => {
+      // 3.1. Retirer le chip du DOM
+      ChipsContainer.removeChild(chip);
+
+      // 3.2. Réinsérer l’option dans le mes options
+      const newOption = document.createElement("option");
+      newOption.value = value;
+      newOption.textContent = label;
+      Select.appendChild(newOption);
+    });
+
+    chip.appendChild(chipText);
+    chip.appendChild(btnRemove);
+    ChipsContainer.appendChild(chip);
+
+    Select.removeChild(option);
+
+    Select.selectedIndex = 0;
+  });
+}
 
 // Recuperation des valeurs de l'evenement grace au atribut data
 document
@@ -300,7 +364,7 @@ document
     btn.addEventListener("click", function (e) {
       // e.preventDefault();
       openEventModificationForm();
-      const tr = e.target.closest("tr"); // La ligne de l'événement
+      const tr = this.closest("tr"); // La ligne de l'événement
 
       const eventId = tr.dataset.id;
       const eventDate = tr.dataset.date;
@@ -312,6 +376,8 @@ document
       const teamsId = tr.dataset.teamsId;
       const teamsName = tr.dataset.teamsName;
 
+      let teamsIdArray = teamsId.split(",").map((id) => id.trim());
+
       // Set l'option du club d'événement par default
       selectDefaultOption(clubId, "modification-event-club-selection");
       // Set l'option du type d'événement par default
@@ -319,6 +385,8 @@ document
         eventTypeId,
         "modification-event-event_type-selection"
       );
+      // Set l'option des équipes d'événement par default
+      selectDefaultOptionChips(teamsIdArray);
       // Set l'option de capacité d'événement par default
       document.getElementById("modification-event-event_capacity").value =
         capacity;
