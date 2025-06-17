@@ -1575,13 +1575,14 @@ li {
     transform: scale(0.95);
   }
 }
+
 .event__creation-message-wrapper {
   margin-top: 16px;
   display: none;
 }
 
 .event__creation-message-wrapper.active {
-  display: flex;
+  display: block;
 }
 
 .event__creation-message-success {
@@ -1599,7 +1600,7 @@ li {
 }
 
 .event__creation-message-error.active {
-  display: flex;
+  display: block;
 }
 
 /* === Section Modification Evénement === */
@@ -1771,6 +1772,33 @@ li {
   &:active {
     transform: scale(0.95);
   }
+}
+
+.event__modification-message-wrapper {
+  margin-top: 16px;
+  display: none;
+}
+
+.event__modification-message-wrapper.active {
+  display: block;
+}
+
+.event__modification-message-success {
+  display: none;
+  color: green;
+}
+
+.event__modification-message-success.active {
+  display: flex;
+}
+
+.event__modification-message-error {
+  display: none;
+  color: red;
+}
+
+.event__modification-message-error.active {
+  display: block;
 }
 
 /* ========================================= /

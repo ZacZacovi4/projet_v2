@@ -113,6 +113,8 @@ async function submitEventCreationForm(event) {
       body[key] = [body[key], value];
     }
   });
+  // on rajoute un champ dans notre body pour pouvoir differencier nos JSON coté PHP
+  body.action = "creation";
 
   console.log(formData);
   console.log(body);
@@ -175,6 +177,8 @@ function onEsc(e) {
 }
 
 // === Gestion des chips du champ de selection d'equipes ===
+
+// Création des chips pour le formulaire de creation
 
 const teamSelectChoices = document.getElementById(
   "creation-event-team-selection"
@@ -251,18 +255,14 @@ const eventModificationForm = document.getElementById(
 );
 
 // overture du formulaire
-function openEventModificationForm() {
+function openEventModificationForm(eventID) {
   eventModificationFormOverlay.classList.add("active");
   eventModificationFormOverlay.setAttribute("aria-hidden", "false");
+  // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
+  eventModificationFormOverlay.querySelector("input").value = eventID;
   // Ecouter la touche Échap
   document.addEventListener("keydown", onEsc);
 }
-
-// eventModificationFormOverlayOpen.addEventListener(
-//   "click",
-//   openEventModificationForm
-//   // selectDefaultOption(clubId, "modification-event-club-selection")
-// );
 
 function closeEventModificationForm() {
   eventModificationFormOverlay.classList.remove("active");
@@ -282,6 +282,7 @@ function onEsc(e) {
     closeEventModificationForm();
   }
 }
+
 // création de la pré-sélection des options de liste déroullant pour le formulaire de modification
 function selectDefaultOption(id, idSelect) {
   let idSelectQuerry = document.getElementById(idSelect);
@@ -292,6 +293,7 @@ function selectDefaultOption(id, idSelect) {
     }
   }
 }
+
 // création de la pré-sélection des chips pour le formulaire de modification
 function selectDefaultOptionChips(ids) {
   const idsArray = ids.split(",").map((id) => id.trim());
@@ -357,20 +359,19 @@ document
   .querySelectorAll(".admin_event-table-field-modifier")
   .forEach((btn) => {
     btn.addEventListener("click", function (e) {
-      // e.preventDefault();
-      openEventModificationForm();
+      e.preventDefault();
+
       const tr = this.closest("tr"); // La ligne de l'événement
 
       const eventId = tr.dataset.id;
       const eventDate = tr.dataset.date;
       const clubId = tr.dataset.clubId;
-      const clubName = tr.dataset.clubName;
       const eventTypeId = tr.dataset.typeId;
-      const eventTypeName = tr.dataset.typeName;
       const capacity = tr.dataset.capacity;
       const teamsId = tr.dataset.teamsId;
-      const teamsName = tr.dataset.teamsName;
 
+      // Overture du formulaire et recuperation de la valeure du eventId
+      openEventModificationForm(eventId);
       // Set l'option du club d'événement par default
       selectDefaultOption(clubId, "modification-event-club-selection");
       // Set l'option du type d'événement par default
@@ -389,7 +390,7 @@ document
     });
   });
 
-// Création des chips
+// Création des chips pour le formulaire de modification
 
 const modificationTeamSelectChoices = document.getElementById(
   "modification-event-team-selection"
@@ -398,7 +399,7 @@ const modificationTeamSelectChipsContainer = document.getElementById(
   "event-modification__chip-wrapper"
 );
 
-// 1. Quand l’utilisateur choisit une option dans le <select>
+// Quand l’utilisateur choisit une option dans le <select>
 
 modificationTeamSelectChoices.addEventListener("change", function () {
   const selectedOption = this.options[this.selectedIndex];
@@ -449,3 +450,68 @@ modificationTeamSelectChoices.addEventListener("change", function () {
 
   modificationTeamSelectChoices.selectedIndex = 0;
 });
+
+async function submitEventModificationForm(event) {
+  event.preventDefault();
+
+  const data = new FormData(event.target);
+  const formData = [...data.entries()];
+  let body = {};
+
+  formData.forEach(([key, value]) => {
+    if (body[key] == null) {
+      body[key] = value;
+    } else if (Array.isArray(body[key])) {
+      body[key].push(value);
+    } else {
+      body[key] = [body[key], value];
+    }
+  });
+
+  body.action = "modification";
+
+  console.log(formData);
+  console.log(body);
+
+  const response = await fetch("index.php?page=eventManagement", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  let status = await response.status;
+  console.log(status);
+
+  switch (status) {
+    case 400:
+      alert(
+        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+      );
+      break;
+    case 500:
+      closeEventModificationForm();
+      document
+        .getElementById("event__modification-message-wrapper")
+        .classList.add("active");
+      errorDBO = document
+        .getElementById("event__modification-message-error-500")
+        .classList.add("active");
+      break;
+    case 200:
+      closeEventModificationForm();
+      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
+      // location.reload();
+      document
+        .getElementById("event__modification-message-wrapper")
+        .classList.add("active");
+      document
+        .getElementById("event__modification-message-success")
+        .classList.add("active");
+      break;
+    default:
+      closeEventModificationForm();
+      alert("reponse inattendu");
+  }
+}

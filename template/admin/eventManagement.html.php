@@ -68,7 +68,7 @@
 
 
                 <div class="event__creation-message-wrapper" id="event__creation-message-wrapper">
-                    <h3 class="event__creation-message-success" id="200">L'événement a été crée.</h3>
+                    <h3 class="event__creation-message-success" id="200">L'événement a été cré.</h3>
                     <h3 class="event__creation-message-error" id="500">Une erreur est survenue lors de la création
                         d'événement.</h3>
                 </div>
@@ -147,6 +147,14 @@
             </div>
             <div class="admin__event-listing">
                 <h2 class="admin__event-listing-heading">Vos Evénements</h2>
+
+                <div class="event__modification-message-wrapper" id="event__modification-message-wrapper">
+                    <h3 class="event__modification-message-success" id="event__modification-message-success">L'événement
+                        a été modifié.</h3>
+                    <h3 class="event__modification-message-error" id="event__modification-message-error-500">Une erreur
+                        est survenue lors de la modification d'événement.</h3>
+                </div>
+
                 <div class="admin_event-table-wrapper">
                     <table class="admin_event-table">
                         <tr class="admin_event-table-headers">
@@ -197,14 +205,13 @@
                     <form action="index.php?page=eventManagement" id="event-modification__form"
                         class="event-modification-overlay-form" method="POST"
                         onsubmit="submitEventModificationForm(event)">
-
+                        <input type="hidden" name="event_id" value="">
                         <div class="event-modification-form-group">
                             <label for="modification-event-club-selection" class="event_modification-label">Club
                                 d'Accueil
                             </label>
                             <select name="club_id" id="modification-event-club-selection"
                                 class="event-modification-input">
-                                <!-- <option value="" disable selected>-- Sélection --</option> -->
                                 <?php foreach ($clubs as $club): ?>
                                     <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
                                 <?php endforeach; ?>
@@ -216,7 +223,6 @@
                                 d'Evénement</label>
                             <select name="event_type_id" id="modification-event-event_type-selection"
                                 class="event-modification-input">
-                                <!-- <option value="" disable selected>-- Sélection --</option> -->
                                 <?php foreach ($eventTypes as $eventType): ?>
                                     <option value="<?= hsc($eventType['event_type_id']) ?>">
                                         <?= hsc($eventType['event_type_name']) ?>
