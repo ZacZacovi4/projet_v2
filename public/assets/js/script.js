@@ -87,6 +87,9 @@ const eventCreateFormOverlayOpen = document.getElementById(
 const eventCreateFormOverlayClose = document.getElementById(
   "close__create-event-form"
 );
+const eventCreateFormOverlayAnnul = document.getElementById(
+  "button-annulation__create-event-form"
+);
 const eventCreateForm = document.getElementById("event-create__form");
 
 // overture du formulaire
@@ -94,68 +97,7 @@ function openEventCreationForm() {
   eventCreateFormOverlay.classList.add("active");
   eventCreateFormOverlay.setAttribute("aria-hidden", "false");
   // Ecouter la touche Échap
-  document.addEventListener("keydown", onEsc);
-}
-
-async function submitEventCreationForm(event) {
-  event.preventDefault();
-
-  const data = new FormData(event.target);
-  const formData = [...data.entries()];
-  let body = {};
-
-  formData.forEach(([key, value]) => {
-    if (body[key] == null) {
-      body[key] = value;
-    } else if (Array.isArray(body[key])) {
-      body[key].push(value);
-    } else {
-      body[key] = [body[key], value];
-    }
-  });
-  // on rajoute un champ dans notre body pour pouvoir differencier nos JSON coté PHP
-  body.action = "creation";
-
-  console.log(formData);
-  console.log(body);
-
-  const response = await fetch("index.php?page=eventManagement", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  let status = await response.status;
-  console.log(status);
-
-  switch (status) {
-    case 400:
-      alert(
-        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
-      );
-      break;
-    case 500:
-      closeEventCreationForm();
-      document
-        .getElementById("event__creation-message-wrapper")
-        .classList.add("active");
-      errorDBO = document.getElementById("500").classList.add("active");
-      break;
-    case 200:
-      closeEventCreationForm();
-      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
-      // location.reload();
-      document
-        .getElementById("event__creation-message-wrapper")
-        .classList.add("active");
-      document.getElementById("200").classList.add("active");
-      break;
-    default:
-      closeEventCreationForm();
-      alert("reponse inattendu");
-  }
+  document.addEventListener("keydown", onEscCreation);
 }
 
 eventCreateFormOverlayOpen.addEventListener("click", openEventCreationForm);
@@ -163,14 +105,23 @@ eventCreateFormOverlayOpen.addEventListener("click", openEventCreationForm);
 function closeEventCreationForm() {
   eventCreateFormOverlay.classList.remove("active");
   eventCreateFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEsc);
+  document.removeEventListener("click", onEscCreation);
 }
+
+function AnnulEventCreationForm(e) {
+  e.preventDefault();
+  eventCreateFormOverlay.classList.remove("active");
+  eventCreateFormOverlay.setAttribute("aria-hidden", "true");
+  document.removeEventListener("click", onEscCreation);
+}
+
+eventCreateFormOverlayAnnul.addEventListener("click", AnnulEventCreationForm);
 
 eventCreateFormOverlayClose.addEventListener("click", closeEventCreationForm);
 
 // fermeture du formulaire en appuyant echape
 
-function onEsc(e) {
+function onEscCreation(e) {
   if (e.key === "Escape") {
     closeEventCreationForm();
   }
@@ -239,16 +190,77 @@ teamSelectChoices.addEventListener("change", function () {
   teamSelectChoices.selectedIndex = 0;
 });
 
+async function submitEventCreationForm(event) {
+  event.preventDefault();
+
+  const data = new FormData(event.target);
+  const formData = [...data.entries()];
+  let body = {};
+
+  formData.forEach(([key, value]) => {
+    if (body[key] == null) {
+      body[key] = value;
+    } else if (Array.isArray(body[key])) {
+      body[key].push(value);
+    } else {
+      body[key] = [body[key], value];
+    }
+  });
+  // on rajoute un champ dans notre body pour pouvoir differencier nos JSON coté PHP
+  body.action = "creation";
+
+  console.log(formData);
+  console.log(body);
+
+  const response = await fetch("index.php?page=eventManagement", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  let status = await response.status;
+  console.log(status);
+
+  switch (status) {
+    case 400:
+      alert(
+        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+      );
+      break;
+    case 500:
+      closeEventCreationForm();
+      document
+        .getElementById("event__creation-message-wrapper")
+        .classList.add("active");
+      errorDBO = document.getElementById("500").classList.add("active");
+      break;
+    case 200:
+      closeEventCreationForm();
+      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
+      // location.reload();
+      document
+        .getElementById("event__creation-message-wrapper")
+        .classList.add("active");
+      document.getElementById("200").classList.add("active");
+      break;
+    default:
+      closeEventCreationForm();
+      alert("reponse inattendu");
+  }
+}
+
 // Formulaire de modification d'événement
 
 const eventModificationFormOverlay = document.getElementById(
   "event-modification__form-overlay"
 );
-const eventModificationFormOverlayOpen = document.getElementById(
-  "admin_event-table-field-modifier"
-);
 const eventModificationFormOverlayClose = document.getElementById(
   "close__modification-event-form"
+);
+const eventModificationFormOverlayAnnul = document.getElementById(
+  "button-annulation__modification-event-form"
 );
 const eventModificationForm = document.getElementById(
   "event-modification__form"
@@ -261,13 +273,25 @@ function openEventModificationForm(eventID) {
   // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
   eventModificationFormOverlay.querySelector("input").value = eventID;
   // Ecouter la touche Échap
-  document.addEventListener("keydown", onEsc);
+  document.addEventListener("keydown", onEscModification);
 }
+
+function AnnulEventModificationForm(e) {
+  e.preventDefault();
+  eventModificationFormOverlay.classList.remove("active");
+  eventModificationFormOverlay.setAttribute("aria-hidden", "true");
+  document.removeEventListener("click", onEscModification);
+}
+
+eventModificationFormOverlayAnnul.addEventListener(
+  "click",
+  AnnulEventModificationForm
+);
 
 function closeEventModificationForm() {
   eventModificationFormOverlay.classList.remove("active");
   eventModificationFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEsc);
+  document.removeEventListener("click", onEscModification);
 }
 
 eventModificationFormOverlayClose.addEventListener(
@@ -277,7 +301,7 @@ eventModificationFormOverlayClose.addEventListener(
 
 // fermeture du formulaire en appuyant echape
 
-function onEsc(e) {
+function onEscModification(e) {
   if (e.key === "Escape") {
     closeEventModificationForm();
   }
@@ -512,6 +536,115 @@ async function submitEventModificationForm(event) {
       break;
     default:
       closeEventModificationForm();
+      alert("reponse inattendu");
+  }
+}
+
+// Formulaire de deletion d'événement
+
+const eventDeletionFormOverlay = document.getElementById(
+  "event-deletion__form-overlay"
+);
+const eventDeletionFormOverlayAnnul = document.getElementById(
+  "button-annulation__deletion-event-form"
+);
+const eventDeletionForm = document.getElementById("event-deletion__form");
+
+// overture du formulaire
+function openEventDeletionForm(eventID) {
+  eventDeletionFormOverlay.classList.add("active");
+  eventDeletionFormOverlay.setAttribute("aria-hidden", "false");
+  // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
+  eventDeletionFormOverlay.querySelector("input").value = eventID;
+}
+
+function AnnulEventDeletionForm(e) {
+  e.preventDefault();
+  eventDeletionFormOverlay.classList.remove("active");
+  eventDeletionFormOverlay.setAttribute("aria-hidden", "true");
+}
+
+eventDeletionFormOverlayAnnul.addEventListener("click", AnnulEventDeletionForm);
+
+function closeEventDeletionForm() {
+  eventDeletionFormOverlay.classList.remove("active");
+  eventDeletionFormOverlay.setAttribute("aria-hidden", "true");
+}
+
+document.querySelectorAll(".admin_event-table-field-deleter").forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const tr = this.closest("tr"); // La ligne de l'événement
+
+    const eventId = tr.dataset.id;
+
+    // Overture du formulaire et recuperation de la valeure du eventId
+    openEventDeletionForm(eventId);
+  });
+});
+
+async function submitEventDeletionForm(event) {
+  event.preventDefault();
+
+  const data = new FormData(event.target);
+  const formData = [...data.entries()];
+  let body = {};
+
+  formData.forEach(([key, value]) => {
+    if (body[key] == null) {
+      body[key] = value;
+    } else if (Array.isArray(body[key])) {
+      body[key].push(value);
+    } else {
+      body[key] = [body[key], value];
+    }
+  });
+
+  body.action = "deletion";
+
+  console.log(formData);
+  console.log(body);
+
+  const response = await fetch("index.php?page=eventManagement", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  let status = await response.status;
+  console.log(status);
+
+  switch (status) {
+    case 400:
+      alert(
+        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+      );
+      break;
+    case 500:
+      closeEventDeletionForm();
+      document
+        .getElementById("event__modification-message-wrapper")
+        .classList.add("active");
+      errorDBO = document
+        .getElementById("event__deletion-message-error-500")
+        .classList.add("active");
+      break;
+    case 200:
+      closeEventDeletionForm();
+      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
+      // location.reload();
+      document
+        .getElementById("event__modification-message-wrapper")
+        .classList.add("active");
+      document
+        .getElementById("event__deletion-message-success")
+        .classList.add("active");
+      break;
+    default:
+      closeEventDeletionForm();
       alert("reponse inattendu");
   }
 }

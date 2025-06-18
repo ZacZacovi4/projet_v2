@@ -78,17 +78,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     // Recuperation et nettoyage de données envoyé
     $action = $data['action'];
-    $clubID = $data['club_id'];
-    $eventTypeID = $data['event_type_id'];
-    $eventDate = $data['event_date'];
-    $eventCapacity = $data['event_capacity'];
-    // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
-    if (!is_array($data['teams_id[]'])) {
-        $data['teams_id[]'] = [$data['teams_id[]']];
-    }
-    $teams_id = array_filter($data['teams_id[]'], fn($v) => $v !== '');
+
     switch ($action) {
         case "creation":
+
+            $clubID = $data['club_id'];
+            $eventTypeID = $data['event_type_id'];
+            $eventDate = $data['event_date'];
+            $eventCapacity = $data['event_capacity'];
+            // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
+            if (!is_array($data['teams_id[]'])) {
+                $data['teams_id[]'] = [$data['teams_id[]']];
+            }
+            $teams_id = array_filter($data['teams_id[]'], fn($v) => $v !== '');
+
+
             // Verification si on a bien reçu des données de nos champs
             if (
                 empty($clubID) ||
@@ -135,7 +139,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case "modification":
+
             $eventID = $data['event_id'];
+            $clubID = $data['club_id'];
+            $eventTypeID = $data['event_type_id'];
+            $eventDate = $data['event_date'];
+            $eventCapacity = $data['event_capacity'];
+            // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
+            if (!is_array($data['teams_id[]'])) {
+                $data['teams_id[]'] = [$data['teams_id[]']];
+            }
+            $teams_id = array_filter($data['teams_id[]'], fn($v) => $v !== '');
 
             // Verification si on a bien reçu des données de nos champs
             if (
@@ -190,6 +204,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case "deletion":
+
+            $eventID = $data['event_id'];
+            // Verification si on a bien reçu des données de nos champs
+            if (empty($eventID)) {
+                http_response_code(400);
+            } else {
+
+                $sql = 'DELETE FROM inscrire WHERE event_id = :event_id';
+                $stmt = $db->prepare($sql);
+                $params = [
+                    ':event_id' => $eventID,
+                ];
+
+                // verification si la requette est executé et les données sont bien effacés puis inserés dans la base de données
+                // on utilise le block try catch parce que dans mon PDO est allumé le mode de gestion d'exceptions
+                try {
+                    if ($stmt->execute($params)) {
+
+                        $sql = 'DELETE FROM events WHERE event_id = :event_id';
+                        $stmt = $db->prepare($sql);
+                        $params = [
+                            ':event_id' => $eventID,
+                        ];
+                        $stmt->execute($params);
+                        http_response_code(200);
+                    }
+                } catch (PDOException $e) {
+                    http_response_code(500);
+                }
+            }
             break;
     }
 }

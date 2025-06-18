@@ -62,6 +62,7 @@
             <div class="admin__content-header-wrapper">
                 <h1 class="admin__content-heading">Gestion des Evénements</h1>
             </div>
+            <!-- Section de création d'événement -->
             <div class="admin__event-creation">
                 <h2 class="admin__event-creation-heading">Créer un nouveau Evénements</h2>
                 <button id="open__create-event-form" class="event__creation-btn">Créer</button>
@@ -139,12 +140,15 @@
                                 class="event-creation-input" />
                         </div>
                         <div class="event-create-form-button-wrapper">
-                            <button type="close" class="button-annulation__create-event-form">Annuler</button>
                             <button type="submit" class="button-submit__create-event-form">Créer</button>
+                            <button type="close" class="button-annulation__create-event-form"
+                                id="button-annulation__create-event-form">Annuler</button>
+
                         </div>
                     </form>
                 </div>
             </div>
+            <!-- Section d'affichage/modification et suppression des événements -->
             <div class="admin__event-listing">
                 <h2 class="admin__event-listing-heading">Vos Evénements</h2>
 
@@ -153,8 +157,13 @@
                         a été modifié.</h3>
                     <h3 class="event__modification-message-error" id="event__modification-message-error-500">Une erreur
                         est survenue lors de la modification d'événement.</h3>
-                </div>
+                    <h3 class="event__deletion-message-success" id="event__deletion-message-success">L'événement
+                        a été suprimé.</h3>
+                    <h3 class="event__deletion-message-error" id="event__deletion-message-error-500">Une erreur
+                        est survenue lors de la suppression d'événement.</h3>
 
+                </div>
+                <!-- Creation de tableau d'événements -->
                 <div class="admin_event-table-wrapper">
                     <table class="admin_event-table">
                         <tr class="admin_event-table-headers">
@@ -192,6 +201,7 @@
                     </table>
                 </div>
             </div>
+            <!-- Formulaire overlay de modification d'evenement -->
             <div id="event-modification__form-overlay" class="admin__event-modification-overlay">
                 <div class="event-modification-overlay-content">
                     <button id="close__modification-event-form" class="button-close__modification-event-form"
@@ -258,8 +268,28 @@
                                 class="event-modification-input" />
                         </div>
                         <div class="event-modification-form-button-wrapper">
-                            <button type="close" class="button-annulation__modification-event-form">Annuler</button>
                             <button type="submit" class="button-submit__modification-event-form">Modifier</button>
+                            <button type="close" class="button-annulation__modification-event-form"
+                                id="button-annulation__modification-event-form">Annuler</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Formulaire overlay de suppression d'evenement -->
+            <div id="event-deletion__form-overlay" class="admin__event-deletion-overlay">
+                <div class="event-deletion-overlay-content">
+                    <div class="event-deletion-form-heading-wrapper">
+                        <h2 class="event-deletion-form-heading">Confirmez la suppression d'événement</h2>
+                    </div>
+                    <form action="index.php?page=eventManagement" id="event-deletion__form"
+                        class="event-deletion-overlay-form" method="POST" onsubmit="submitEventDeletionForm(event)">
+                        <input type="hidden" name="event_id" value="">
+                        <div class="event-deletion-form-button-wrapper">
+                            <button type="submit" class="button-submit__deletion-event-form">Valider</button>
+                            <button type="close" class="button-annulation__deletion-event-form"
+                                id="button-annulation__deletion-event-form">Annuler</button>
+
                         </div>
                     </form>
                 </div>

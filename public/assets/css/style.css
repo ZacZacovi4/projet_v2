@@ -1801,6 +1801,98 @@ li {
   display: block;
 }
 
+/* === Formulaire de Suppression d'événements === */
+
+.admin__event-deletion-overlay {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* Quand on veut afficher le modal */
+.admin__event-deletion-overlay.active {
+  display: flex;
+}
+
+.event-deletion-overlay-content {
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--color1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event-deletion-form-heading-wrapper {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.event-deletion-form-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 16px 16px 0;
+}
+
+.button-submit__deletion-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.button-annulation__deletion-event-form {
+  margin-left: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  color: var(--color1);
+  background-color: var(--color2);
+  cursor: pointer;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: var(--color3);
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.event__deletion-message-success {
+  display: none;
+  color: green;
+}
+
+.event__deletion-message-success.active {
+  display: flex;
+}
+
+.event__deletion-message-error {
+  display: none;
+  color: red;
+}
+
+.event__deletion-message-error.active {
+  display: block;
+}
+
 /* ========================================= /
 / ======= MEDIA QUERY USERS CONTENT ======== /
 / ========================================= */
