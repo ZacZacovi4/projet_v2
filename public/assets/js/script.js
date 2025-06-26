@@ -114,6 +114,7 @@ function closeEventForm() {
   eventForm
     .querySelectorAll("input, textarea, select")
     .forEach((el) => (el.value = ""));
+  deleteOptionChips();
   eventFormOverlay.classList.remove("active");
   eventFormOverlay.setAttribute("aria-hidden", "true");
   document.removeEventListener("click", onEsc);
@@ -143,12 +144,12 @@ function selectDefaultOption(id, idSelect) {
 // création de la pré-sélection des chips pour le formulaire de modification
 function selectDefaultOptionChips(ids) {
   const idsArray = ids.split(",").map((id) => id.trim());
-  const Select = document.getElementById("event__team-selection");
-  const ChipsContainer = document.getElementById("event__chip-wrapper");
+  const select = document.getElementById("event__team-selection");
+  const chipsContainer = document.getElementById("event__chip-wrapper");
 
   idsArray.forEach((id) => {
     // transformation string en array
-    const arrayOpt = Array.from(Select.options);
+    const arrayOpt = Array.from(select.options);
 
     const option = arrayOpt.find((opt) => opt.value == id);
 
@@ -179,28 +180,46 @@ function selectDefaultOptionChips(ids) {
 
     btnRemove.addEventListener("click", () => {
       // 3.1. Retirer le chip du DOM
-      ChipsContainer.removeChild(chip);
+      chipsContainer.removeChild(chip);
 
       // 3.2. Réinsérer l’option dans le mes options
       const newOption = document.createElement("option");
       newOption.value = value;
       newOption.textContent = label;
-      Select.appendChild(newOption);
+      select.appendChild(newOption);
     });
 
     chip.appendChild(chipText);
     chip.appendChild(btnRemove);
-    ChipsContainer.appendChild(chip);
+    chipsContainer.appendChild(chip);
 
-    Select.removeChild(option);
+    select.removeChild(option);
 
-    Select.selectedIndex = 0;
+    select.selectedIndex = 0;
   });
 }
 
-// function deleteOptionChips() {
+// nettoyage des chips en les effacant et construisant des options à la base de chips existantes
 
-// }
+function deleteOptionChips() {
+  const select = document.getElementById("event__team-selection");
+  const chipsContainer = document.getElementById("event__chip-wrapper");
+  const chips = document.querySelectorAll(".event__chip");
+
+  chips.forEach((chip) => {
+    const key = chip.dataset.value;
+    const value = chip.querySelector("span")?.textContent.trim();
+
+    if (key && value) {
+      const newOption = document.createElement("option");
+      newOption.value = key;
+      newOption.textContent = value;
+      select.appendChild(newOption);
+    }
+  });
+
+  chipsContainer.innerHTML = "";
+}
 
 eventCreateFormOverlayOpen.addEventListener("click", openEventForm);
 
@@ -495,3 +514,9 @@ if (msg) {
     setTimeout(() => msg.remove(), 500);
   }, 5000);
 }
+
+// // Tri alphabétique des options après ajout
+// const options = Array.from(select.options);
+// options.sort((a, b) => a.text.localeCompare(b.text));
+// select.innerHTML = ""; // vider
+// options.forEach(opt => select.appendChild(opt)); // réinsérer trié
