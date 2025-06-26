@@ -1404,6 +1404,27 @@ li {
 / =============== PAGE EVENT =============== /
 / ========================================= */
 
+/* === Gestion des messages d'erreur === */
+
+.event__message-wrapper {
+  display: block;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background-color: var(--color1);
+  transition: opacity 0.5s;
+}
+
+.event__message-success {
+  color: green;
+}
+
+.event__message-error {
+  color: red;
+}
+
+/* === Section Creation d'événement === */
+
 .admin__event-creation {
   margin-top: 16px;
   padding: 16px;
@@ -1439,168 +1460,6 @@ li {
   padding: 16px;
   border-radius: 10px;
   background-color: var(--color1);
-}
-
-/* == FORMULAIRE DE CREATION D'EVENEMENT == */
-
-.admin__event-creation-overlay {
-  display: none;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  inset: 0; /* top:0; right:0; bottom:0; left:0; */
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-}
-
-/* Quand on veut afficher le modal */
-.admin__event-creation-overlay.active {
-  display: flex;
-}
-
-.event-creation-overlay-content {
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background: var(--color1);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.event-creation-form-heading-wrapper {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-/* Bouton de fermeture */
-.button-close__create-event-form {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  border: none;
-  background: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.event-creation-form-group {
-  display: flex;
-  flex-direction: column;
-  margin: 16px;
-}
-
-.event-creation-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--color4);
-  border-radius: 4px;
-}
-
-.event_creation-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-/* === Chips de selection d'equipe === */
-
-.event-creation__chip-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.event-creation__chip {
-  display: inline-flex;
-  align-items: center;
-  background-color: #e0e0e0;
-  border-radius: 16px;
-  padding: 4px 4px 4px 8px;
-}
-
-.event-creation__chip span {
-  margin-right: 6px;
-}
-
-.event-creation__chip button {
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  cursor: pointer;
-  line-height: 1;
-}
-
-/* END = Chips de selection d'equipe = END */
-
-.event-create-form-button-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin: 32px 16px 16px 0;
-}
-
-.button-submit__create-event-form {
-  margin-left: 16px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  font-weight: bold;
-  color: var(--color1);
-  background-color: var(--color2);
-  cursor: pointer;
-  transition: 0.3s ease;
-  &:hover {
-    background-color: var(--color3);
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-.button-annulation__create-event-form {
-  margin-left: 16px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  font-weight: bold;
-  color: var(--color1);
-  background-color: var(--color2);
-  cursor: pointer;
-  transition: 0.3s ease;
-  &:hover {
-    background-color: var(--color3);
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-}
-
-.event__creation-message-wrapper {
-  margin-top: 16px;
-  display: none;
-}
-
-.event__creation-message-wrapper.active {
-  display: block;
-}
-
-.event__creation-message-success {
-  display: none;
-  color: green;
-}
-
-.event__creation-message-success.active {
-  display: flex;
-}
-
-.event__creation-message-error {
-  display: none;
-  color: red;
-}
-
-.event__creation-message-error.active {
-  display: block;
 }
 
 /* === Section Modification Evénement === */
@@ -1639,9 +1498,9 @@ li {
   color: red;
 }
 
-/* === Formulaire de Modification d'événements === */
+/* === Formulaire de Gestion d'événement === */
 
-.admin__event-modification-overlay {
+.admin__event-form-overlay {
   display: none;
   position: fixed;
   justify-content: center;
@@ -1652,11 +1511,11 @@ li {
 }
 
 /* Quand on veut afficher le modal */
-.admin__event-modification-overlay.active {
+.admin__event-form-overlay.active {
   display: flex;
 }
 
-.event-modification-overlay-content {
+.event__form-overlay-content {
   width: 90%;
   max-width: 500px;
   position: relative;
@@ -1666,13 +1525,13 @@ li {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.event-modification-form-heading-wrapper {
+.event__form-heading-wrapper {
   text-align: center;
   margin-bottom: 32px;
 }
 
 /* Bouton de fermeture */
-.button-close__modification-event-form {
+.button-close__event-form {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -1682,20 +1541,20 @@ li {
   cursor: pointer;
 }
 
-.event-modification-form-group {
+.event__form-group {
   display: flex;
   flex-direction: column;
   margin: 16px;
 }
 
-.event-modification-input {
+.event__form-input {
   width: 100%;
   padding: 12px;
   border: 1px solid var(--color4);
   border-radius: 4px;
 }
 
-.event_modification-label {
+.event__form-label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
@@ -1703,14 +1562,14 @@ li {
 
 /* === Chips de selection d'equipe === */
 
-.event-modification__chip-wrapper {
+.event__chip-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
 }
 
-.event-modification__chip {
+.event__chip {
   display: inline-flex;
   align-items: center;
   background-color: #e0e0e0;
@@ -1718,11 +1577,11 @@ li {
   padding: 4px 4px 4px 8px;
 }
 
-.event-modification__chip span {
+.event__chip span {
   margin-right: 6px;
 }
 
-.event-modification__chip button {
+.event__chip button {
   border: none;
   background: transparent;
   font-size: 1rem;
@@ -1732,13 +1591,13 @@ li {
 
 /* END = Chips de selection d'equipe = END */
 
-.event-modification-form-button-wrapper {
+.event__form-button-wrapper {
   display: flex;
   justify-content: space-between;
   margin: 32px 16px 16px 0;
 }
 
-.button-submit__modification-event-form {
+.button__submit-event-form {
   margin-left: 16px;
   padding: 8px 16px;
   border-radius: 4px;
@@ -1756,7 +1615,7 @@ li {
   }
 }
 
-.button-annulation__modification-event-form {
+.button__annulation-event-form {
   margin-left: 16px;
   padding: 8px 16px;
   border-radius: 4px;
@@ -1772,33 +1631,6 @@ li {
   &:active {
     transform: scale(0.95);
   }
-}
-
-.event__modification-message-wrapper {
-  margin-top: 16px;
-  display: none;
-}
-
-.event__modification-message-wrapper.active {
-  display: block;
-}
-
-.event__modification-message-success {
-  display: none;
-  color: green;
-}
-
-.event__modification-message-success.active {
-  display: flex;
-}
-
-.event__modification-message-error {
-  display: none;
-  color: red;
-}
-
-.event__modification-message-error.active {
-  display: block;
 }
 
 /* === Formulaire de Suppression d'événements === */
@@ -1873,24 +1705,6 @@ li {
   &:active {
     transform: scale(0.95);
   }
-}
-
-.event__deletion-message-success {
-  display: none;
-  color: green;
-}
-
-.event__deletion-message-success.active {
-  display: flex;
-}
-
-.event__deletion-message-error {
-  display: none;
-  color: red;
-}
-
-.event__deletion-message-error.active {
-  display: block;
 }
 
 /* ========================================= /

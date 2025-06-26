@@ -76,234 +76,56 @@ hamburger.addEventListener("click", changeToCross);
 // ==== GESTION EVENEMENTS =====
 // =============================
 
-// Gestion formulaire de creation d'evenements
+// Gestion du formulaire d'événements
 
-const eventCreateFormOverlay = document.getElementById(
-  "event-create__form-overlay"
-);
 const eventCreateFormOverlayOpen = document.getElementById(
   "open__create-event-form"
 );
-const eventCreateFormOverlayClose = document.getElementById(
-  "close__create-event-form"
+const eventFormOverlay = document.getElementById("event__form-overlay");
+const eventFormOverlayClose = document.getElementById("close__event-form");
+const eventFormOverlayAnnul = document.getElementById(
+  "button__annulation-event-form"
 );
-const eventCreateFormOverlayAnnul = document.getElementById(
-  "button-annulation__create-event-form"
-);
-const eventCreateForm = document.getElementById("event-create__form");
+const eventForm = document.getElementById("event__form");
 
 // overture du formulaire
-function openEventCreationForm() {
-  eventCreateFormOverlay.classList.add("active");
-  eventCreateFormOverlay.setAttribute("aria-hidden", "false");
-  // Ecouter la touche Échap
-  document.addEventListener("keydown", onEscCreation);
-}
-
-eventCreateFormOverlayOpen.addEventListener("click", openEventCreationForm);
-
-function closeEventCreationForm() {
-  eventCreateFormOverlay.classList.remove("active");
-  eventCreateFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEscCreation);
-}
-
-function AnnulEventCreationForm(e) {
-  e.preventDefault();
-  eventCreateFormOverlay.classList.remove("active");
-  eventCreateFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEscCreation);
-}
-
-eventCreateFormOverlayAnnul.addEventListener("click", AnnulEventCreationForm);
-
-eventCreateFormOverlayClose.addEventListener("click", closeEventCreationForm);
-
-// fermeture du formulaire en appuyant echape
-
-function onEscCreation(e) {
-  if (e.key === "Escape") {
-    closeEventCreationForm();
-  }
-}
-
-// === Gestion des chips du champ de selection d'equipes ===
-
-// Création des chips pour le formulaire de creation
-
-const teamSelectChoices = document.getElementById(
-  "creation-event-team-selection"
-);
-const teamSelectChipsContainer = document.getElementById(
-  "event-creation__chip-wrapper"
-);
-
-// 1. Quand l’utilisateur choisit une option dans le <select>
-
-teamSelectChoices.addEventListener("change", function () {
-  const selectedOption = this.options[this.selectedIndex];
-  const value = selectedOption.value;
-  const label = selectedOption.text;
-
-  if (!value) {
-    // Option non valide
-    return;
-  }
-
-  // 2. Créer le chip et l’ajouter au conteneur
-
-  const chip = document.createElement("div");
-  chip.className = "event-creation__chip";
-  chip.dataset.value = value; // pour le retrouver plus tard
-
-  const chipText = document.createElement("span");
-  chipText.textContent = label;
-
-  const btnRemove = document.createElement("button");
-  btnRemove.type = "button";
-  btnRemove.innerHTML = "&times;";
-  btnRemove.title = "Supprimer"; // accesibilité
-
-  const hiddenInput = document.createElement("input");
-  hiddenInput.type = "hidden";
-  hiddenInput.name = "teams_id[]";
-  hiddenInput.value = value;
-  chip.appendChild(hiddenInput);
-
-  btnRemove.addEventListener("click", () => {
-    // 3.1. Retirer le chip du DOM
-    teamSelectChipsContainer.removeChild(chip);
-
-    // 3.2. Réinsérer l’option dans le mes options
-    const newOption = document.createElement("option");
-    newOption.value = value;
-    newOption.textContent = label;
-    teamSelectChoices.appendChild(newOption);
-  });
-
-  chip.appendChild(chipText);
-  chip.appendChild(btnRemove);
-  teamSelectChipsContainer.appendChild(chip);
-
-  teamSelectChoices.removeChild(selectedOption);
-
-  teamSelectChoices.selectedIndex = 0;
-});
-
-async function submitEventCreationForm(event) {
-  event.preventDefault();
-
-  const data = new FormData(event.target);
-  const formData = [...data.entries()];
-  let body = {};
-
-  formData.forEach(([key, value]) => {
-    if (body[key] == null) {
-      body[key] = value;
-    } else if (Array.isArray(body[key])) {
-      body[key].push(value);
-    } else {
-      body[key] = [body[key], value];
-    }
-  });
-  // on rajoute un champ dans notre body pour pouvoir differencier nos JSON coté PHP
-  body.action = "creation";
-
-  console.log(formData);
-  console.log(body);
-
-  const response = await fetch("index.php?page=eventManagement", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  let status = await response.status;
-  console.log(status);
-
-  switch (status) {
-    case 400:
-      alert(
-        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
-      );
-      break;
-    case 500:
-      closeEventCreationForm();
-      document
-        .getElementById("event__creation-message-wrapper")
-        .classList.add("active");
-      errorDBO = document.getElementById("500").classList.add("active");
-      break;
-    case 200:
-      closeEventCreationForm();
-      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
-      // location.reload();
-      document
-        .getElementById("event__creation-message-wrapper")
-        .classList.add("active");
-      document.getElementById("200").classList.add("active");
-      break;
-    default:
-      closeEventCreationForm();
-      alert("reponse inattendu");
-  }
-}
-
-// Formulaire de modification d'événement
-
-const eventModificationFormOverlay = document.getElementById(
-  "event-modification__form-overlay"
-);
-const eventModificationFormOverlayClose = document.getElementById(
-  "close__modification-event-form"
-);
-const eventModificationFormOverlayAnnul = document.getElementById(
-  "button-annulation__modification-event-form"
-);
-const eventModificationForm = document.getElementById(
-  "event-modification__form"
-);
-
-// overture du formulaire
-function openEventModificationForm(eventID) {
-  eventModificationFormOverlay.classList.add("active");
-  eventModificationFormOverlay.setAttribute("aria-hidden", "false");
+function openEventForm(isEdit = false, eventID = null) {
+  eventFormOverlay.classList.add("active");
+  eventFormOverlay.setAttribute("aria-hidden", "false");
   // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
-  eventModificationFormOverlay.querySelector("input").value = eventID;
+  if (isEdit) {
+    eventFormOverlay.querySelector("input").value = eventID;
+  }
   // Ecouter la touche Échap
-  document.addEventListener("keydown", onEscModification);
+  document.addEventListener("keydown", onEsc);
 }
 
-function AnnulEventModificationForm(e) {
+function AnnulEventForm(e) {
   e.preventDefault();
-  eventModificationFormOverlay.classList.remove("active");
-  eventModificationFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEscModification);
+  eventForm.reset();
+  eventFormOverlay.classList.remove("active");
+  eventFormOverlay.setAttribute("aria-hidden", "true");
+  document.removeEventListener("click", onEsc);
 }
 
-eventModificationFormOverlayAnnul.addEventListener(
-  "click",
-  AnnulEventModificationForm
-);
+eventFormOverlayAnnul.addEventListener("click", AnnulEventForm);
 
-function closeEventModificationForm() {
-  eventModificationFormOverlay.classList.remove("active");
-  eventModificationFormOverlay.setAttribute("aria-hidden", "true");
-  document.removeEventListener("click", onEscModification);
+function closeEventForm() {
+  eventForm
+    .querySelectorAll("input, textarea, select")
+    .forEach((el) => (el.value = ""));
+  eventFormOverlay.classList.remove("active");
+  eventFormOverlay.setAttribute("aria-hidden", "true");
+  document.removeEventListener("click", onEsc);
 }
 
-eventModificationFormOverlayClose.addEventListener(
-  "click",
-  closeEventModificationForm
-);
+eventFormOverlayClose.addEventListener("click", closeEventForm);
 
 // fermeture du formulaire en appuyant echape
 
-function onEscModification(e) {
+function onEsc(e) {
   if (e.key === "Escape") {
-    closeEventModificationForm();
+    closeEventForm();
   }
 }
 
@@ -321,10 +143,8 @@ function selectDefaultOption(id, idSelect) {
 // création de la pré-sélection des chips pour le formulaire de modification
 function selectDefaultOptionChips(ids) {
   const idsArray = ids.split(",").map((id) => id.trim());
-  const Select = document.getElementById("modification-event-team-selection");
-  const ChipsContainer = document.getElementById(
-    "event-modification__chip-wrapper"
-  );
+  const Select = document.getElementById("event__team-selection");
+  const ChipsContainer = document.getElementById("event__chip-wrapper");
 
   idsArray.forEach((id) => {
     // transformation string en array
@@ -340,7 +160,7 @@ function selectDefaultOptionChips(ids) {
     // Créer le chip et l’ajouter au conteneur
 
     const chip = document.createElement("div");
-    chip.className = "event-modification__chip";
+    chip.className = "event__chip";
     chip.dataset.value = value; // pour le retrouver plus tard
 
     const chipText = document.createElement("span");
@@ -378,6 +198,12 @@ function selectDefaultOptionChips(ids) {
   });
 }
 
+// function deleteOptionChips() {
+
+// }
+
+eventCreateFormOverlayOpen.addEventListener("click", openEventForm);
+
 // Recuperation des valeurs de l'evenement grace au atribut data
 document
   .querySelectorAll(".admin_event-table-field-modifier")
@@ -395,37 +221,30 @@ document
       const teamsId = tr.dataset.teamsId;
 
       // Overture du formulaire et recuperation de la valeure du eventId
-      openEventModificationForm(eventId);
+      openEventForm(true, eventId);
       // Set l'option du club d'événement par default
-      selectDefaultOption(clubId, "modification-event-club-selection");
+      selectDefaultOption(clubId, "event__club-selection");
       // Set l'option du type d'événement par default
-      selectDefaultOption(
-        eventTypeId,
-        "modification-event-event_type-selection"
-      );
+      selectDefaultOption(eventTypeId, "event__type-selection");
+      // Netoyage de valeurs
+      // deleteOptionChips();
       // Set l'option des équipes d'événement par default
       selectDefaultOptionChips(teamsId);
       // Set l'option de capacité d'événement par default
-      document.getElementById("modification-event-event_capacity").value =
-        capacity;
+      document.getElementById("event__capacity").value = capacity;
       // Set l'option de date d'événement par default
-      document.getElementById("modification-event-event_date").value =
-        eventDate;
+      document.getElementById("event__date").value = eventDate;
     });
   });
 
-// Création des chips pour le formulaire de modification
+// Création des chips pour le formulaire d'événement
 
-const modificationTeamSelectChoices = document.getElementById(
-  "modification-event-team-selection"
-);
-const modificationTeamSelectChipsContainer = document.getElementById(
-  "event-modification__chip-wrapper"
-);
+const teamSelectChoices = document.getElementById("event__team-selection");
+const teamSelectChipsContainer = document.getElementById("event__chip-wrapper");
 
 // Quand l’utilisateur choisit une option dans le <select>
 
-modificationTeamSelectChoices.addEventListener("change", function () {
+teamSelectChoices.addEventListener("change", function () {
   const selectedOption = this.options[this.selectedIndex];
   const value = selectedOption.value;
   const label = selectedOption.text;
@@ -438,7 +257,7 @@ modificationTeamSelectChoices.addEventListener("change", function () {
   // 2. Créer le chip et l’ajouter au conteneur
 
   const chip = document.createElement("div");
-  chip.className = "event-modification__chip";
+  chip.className = "event__chip";
   chip.dataset.value = value; // pour le retrouver plus tard
 
   const chipText = document.createElement("span");
@@ -457,25 +276,25 @@ modificationTeamSelectChoices.addEventListener("change", function () {
 
   btnRemove.addEventListener("click", () => {
     // 3.1. Retirer le chip du DOM
-    modificationTeamSelectChipsContainer.removeChild(chip);
+    teamSelectChipsContainer.removeChild(chip);
 
     // 3.2. Réinsérer l’option dans le mes options
     const newOption = document.createElement("option");
     newOption.value = value;
     newOption.textContent = label;
-    modificationTeamSelectChoices.appendChild(newOption);
+    teamSelectChoices.appendChild(newOption);
   });
 
   chip.appendChild(chipText);
   chip.appendChild(btnRemove);
-  modificationTeamSelectChipsContainer.appendChild(chip);
+  teamSelectChipsContainer.appendChild(chip);
 
-  modificationTeamSelectChoices.removeChild(selectedOption);
+  teamSelectChoices.removeChild(selectedOption);
 
-  modificationTeamSelectChoices.selectedIndex = 0;
+  teamSelectChoices.selectedIndex = 0;
 });
 
-async function submitEventModificationForm(event) {
+async function submitEventForm(event) {
   event.preventDefault();
 
   const data = new FormData(event.target);
@@ -492,51 +311,79 @@ async function submitEventModificationForm(event) {
     }
   });
 
-  body.action = "modification";
+  // verification si c'est la creation d'event ou modification en utilisant event_id
+  if (body.event_id) {
+    body.action = "modification";
 
-  console.log(formData);
-  console.log(body);
+    console.log(formData);
+    console.log(body);
 
-  const response = await fetch("index.php?page=eventManagement", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+    const response = await fetch("index.php?page=eventManagement", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  let status = await response.status;
-  console.log(status);
+    let status = await response.status;
+    console.log(status);
 
-  switch (status) {
-    case 400:
-      alert(
-        "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
-      );
-      break;
-    case 500:
-      closeEventModificationForm();
-      document
-        .getElementById("event__modification-message-wrapper")
-        .classList.add("active");
-      errorDBO = document
-        .getElementById("event__modification-message-error-500")
-        .classList.add("active");
-      break;
-    case 200:
-      closeEventModificationForm();
-      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
-      // location.reload();
-      document
-        .getElementById("event__modification-message-wrapper")
-        .classList.add("active");
-      document
-        .getElementById("event__modification-message-success")
-        .classList.add("active");
-      break;
-    default:
-      closeEventModificationForm();
-      alert("reponse inattendu");
+    switch (status) {
+      case 400:
+        alert(
+          "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+        );
+        break;
+      case 500:
+        closeEventForm();
+        location.reload();
+        break;
+      case 200:
+        closeEventForm();
+        // reload de la page pour montrer des changements dynamiquement
+        location.reload();
+        break;
+      default:
+        closeEventForm();
+        alert("reponse inattendu");
+    }
+  } else {
+    body.action = "creation";
+
+    console.log(formData);
+    console.log(body);
+
+    const response = await fetch("index.php?page=eventManagement", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    let status = await response.status;
+    console.log(status);
+
+    switch (status) {
+      case 400:
+        alert(
+          "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+        );
+        break;
+      case 500:
+        closeEventForm();
+        location.reload();
+        break;
+      case 200:
+        closeEventForm();
+        // reload de la page pour montrer des changements dynamiquement
+        location.reload();
+        break;
+      default:
+        closeEventForm();
+        alert("reponse inattendu");
+    }
   }
 }
 
@@ -625,26 +472,26 @@ async function submitEventDeletionForm(event) {
       break;
     case 500:
       closeEventDeletionForm();
-      document
-        .getElementById("event__modification-message-wrapper")
-        .classList.add("active");
-      errorDBO = document
-        .getElementById("event__deletion-message-error-500")
-        .classList.add("active");
+      location.reload();
       break;
     case 200:
       closeEventDeletionForm();
-      // il faut finir le reload pour que l'événement soit directement accessible dans mon tableau d'événement
-      // location.reload();
-      document
-        .getElementById("event__modification-message-wrapper")
-        .classList.add("active");
-      document
-        .getElementById("event__deletion-message-success")
-        .classList.add("active");
+      location.reload();
       break;
     default:
       closeEventDeletionForm();
       alert("reponse inattendu");
   }
+}
+
+const msg = document.getElementById("event__message-wrapper");
+
+// Fonction de remove de flash messages
+if (msg) {
+  setTimeout(() => {
+    console.log();
+    msg.style.opacity = "0";
+    msg.style.transition = "opacity 0.5s";
+    setTimeout(() => msg.remove(), 500);
+  }, 5000);
 }

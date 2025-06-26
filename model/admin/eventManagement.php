@@ -132,9 +132,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $stmt->execute($params);
                         endforeach;
                         http_response_code(200);
+                        $_SESSION['message'] = "L'événement a été cré.";
                     }
                 } catch (PDOException $e) {
                     http_response_code(500);
+                    $_SESSION['error'] = "Une erreur est survenue lors de la création
+                        d'événement.";
                 }
             }
             break;
@@ -195,11 +198,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 ];
                                 $stmt->execute($params);
                             endforeach;
+
+                            // unset($_SESSION['message']);
                             http_response_code(200);
+                            $_SESSION['message'] = "L'événement
+                        a été modifié.";
                         }
                     }
                 } catch (PDOException $e) {
+
                     http_response_code(500);
+                    $_SESSION['error'] = "Une erreur est survenue lors de la modification d'événement.";
+
                 }
             }
             break;
@@ -229,14 +239,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ];
                         $stmt->execute($params);
                         http_response_code(200);
+                        $_SESSION['message'] = "L'événement
+                        a été suprimé.";
                     }
                 } catch (PDOException $e) {
                     http_response_code(500);
+                    $_SESSION['error'] = "Une erreur
+                        est survenue lors de la suppression d'événement.";
                 }
             }
             break;
     }
+    exit;
 }
+
+$message = $_SESSION['message'] ?? '';
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['message'], $_SESSION['error']);
 
 
 

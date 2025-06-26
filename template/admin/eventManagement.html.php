@@ -62,107 +62,27 @@
             <div class="admin__content-header-wrapper">
                 <h1 class="admin__content-heading">Gestion des Evénements</h1>
             </div>
+            <?php if ($message || $error): ?>
+                <div class="event__message-wrapper" id="event__message-wrapper">
+                    <?php if ($message): ?>
+                        <h3 class="event__message-success" id="event__message-success"><?= htmlspecialchars($message) ?></h3>
+                        <?php
+                    endif; ?>
+                    <?php if ($error): ?>
+                        <h3 class="event__message-error" id="event__message-error"><?= htmlspecialchars($error) ?></h3>
+                        <?php
+                    endif; ?>
+                </div>
+            <?php endif; ?>
             <!-- Section de création d'événement -->
             <div class="admin__event-creation">
                 <h2 class="admin__event-creation-heading">Créer un nouveau Evénements</h2>
                 <button id="open__create-event-form" class="event__creation-btn">Créer</button>
-
-
-                <div class="event__creation-message-wrapper" id="event__creation-message-wrapper">
-                    <h3 class="event__creation-message-success" id="200">L'événement a été cré.</h3>
-                    <h3 class="event__creation-message-error" id="500">Une erreur est survenue lors de la création
-                        d'événement.</h3>
-                </div>
-
-            </div>
-            <!-- Formulaire overlay de creation d'evenement -->
-            <div id="event-create__form-overlay" class="admin__event-creation-overlay">
-                <div class="event-creation-overlay-content">
-                    <button id="close__create-event-form" class="button-close__create-event-form"
-                        aria-label="Fermer le formulaire">
-                        &times;
-                    </button>
-                    <div class="event-creation-form-heading-wrapper">
-                        <h2 class="event-creation-form-heading">Création d'Evénement</h2>
-                    </div>
-
-                    <form action="index.php?page=eventManagement" id="event-create__form"
-                        class="event-creation-overlay-form" method="POST" onsubmit="submitEventCreationForm(event)">
-
-                        <div class="event-creation-form-group">
-                            <label for="creation-event-club-selection" class="event_creation-label">Club d'Accueil
-                            </label>
-                            <select name="club_id" id="creation-event-club-selection" class="event-creation-input">
-                                <option value="" disable selected>-- Sélection --</option>
-                                <?php foreach ($clubs as $club): ?>
-                                    <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="event-creation-form-group"> <label for="creation-event-event_type-selection"
-                                class="event_creation-label">Type
-                                d'Evénement</label>
-                            <select name="event_type_id" id="creation-event-event_type-selection"
-                                class="event-creation-input">
-                                <option value="" disable selected>-- Sélection --</option>
-                                <?php foreach ($eventTypes as $eventType): ?>
-                                    <option value="<?= hsc($eventType['event_type_id']) ?>">
-                                        <?= hsc($eventType['event_type_name']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="event-creation-form-group"> <label for="creation-event-team-selection"
-                                class="event_creation-label">Les équipes
-                                participants</label>
-                            <div id="event-creation__chip-wrapper" class="event-creation__chip-wrapper"></div>
-                            <select name="teams_id[]" id="creation-event-team-selection" class="event-creation-input">
-                                <option value="" disable>-- Sélection --</option>
-                                <?php foreach ($teams as $team): ?>
-                                    <option value="<?= hsc($team['team_id']) ?>"><?= hsc($team['team_name']) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <div class="event-creation-form-group"> <label for="creation-event-event_date"
-                                class="event_creation-label">Date d'Evénement
-                            </label>
-                            <input type="datetime-local" id="creation-event-event_date" name="event_date"
-                                class="event-creation-input" />
-                        </div>
-
-                        <div class="event-creation-form-group"> <label for="creation-event-event_capacity"
-                                class="event_creation-label">Capacité
-                                d'Evénement</label>
-                            <input type="number" id="creation-event-event_capacity" name="event_capacity" min="1"
-                                class="event-creation-input" />
-                        </div>
-                        <div class="event-create-form-button-wrapper">
-                            <button type="submit" class="button-submit__create-event-form">Créer</button>
-                            <button type="close" class="button-annulation__create-event-form"
-                                id="button-annulation__create-event-form">Annuler</button>
-
-                        </div>
-                    </form>
-                </div>
             </div>
             <!-- Section d'affichage/modification et suppression des événements -->
             <div class="admin__event-listing">
                 <h2 class="admin__event-listing-heading">Vos Evénements</h2>
 
-                <div class="event__modification-message-wrapper" id="event__modification-message-wrapper">
-                    <h3 class="event__modification-message-success" id="event__modification-message-success">L'événement
-                        a été modifié.</h3>
-                    <h3 class="event__modification-message-error" id="event__modification-message-error-500">Une erreur
-                        est survenue lors de la modification d'événement.</h3>
-                    <h3 class="event__deletion-message-success" id="event__deletion-message-success">L'événement
-                        a été suprimé.</h3>
-                    <h3 class="event__deletion-message-error" id="event__deletion-message-error-500">Une erreur
-                        est survenue lors de la suppression d'événement.</h3>
-
-                </div>
                 <!-- Creation de tableau d'événements -->
                 <div class="admin_event-table-wrapper">
                     <table class="admin_event-table">
@@ -201,38 +121,33 @@
                     </table>
                 </div>
             </div>
-            <!-- Formulaire overlay de modification d'evenement -->
-            <div id="event-modification__form-overlay" class="admin__event-modification-overlay">
-                <div class="event-modification-overlay-content">
-                    <button id="close__modification-event-form" class="button-close__modification-event-form"
-                        aria-label="Fermer le formulaire">
+            <!-- Formulaire overlay d'evenement -->
+            <div id="event__form-overlay" class="admin__event-form-overlay">
+                <div class="event__form-overlay-content">
+                    <button id="close__event-form" class="button-close__event-form" aria-label="Fermer le formulaire">
                         &times;
                     </button>
-                    <div class="event-modification-form-heading-wrapper">
-                        <h2 class="event-modification-form-heading">Modification d'Evénement</h2>
+                    <div class="event__form-heading-wrapper">
+                        <h2 class="event__form-heading">Gestion d'Evénement</h2>
                     </div>
 
-                    <form action="index.php?page=eventManagement" id="event-modification__form"
-                        class="event-modification-overlay-form" method="POST"
-                        onsubmit="submitEventModificationForm(event)">
+                    <form id="event__form" class="event__overlay-form" onsubmit="submitEventForm(event)">
                         <input type="hidden" name="event_id" value="">
-                        <div class="event-modification-form-group">
-                            <label for="modification-event-club-selection" class="event_modification-label">Club
+                        <div class="event__form-group">
+                            <label for="event__club-selection" class="event__form-label">Club
                                 d'Accueil
                             </label>
-                            <select name="club_id" id="modification-event-club-selection"
-                                class="event-modification-input">
+                            <select name="club_id" id="event__club-selection" class="event__form-input">
                                 <?php foreach ($clubs as $club): ?>
                                     <option value="<?= hsc($club['club_id']) ?>"><?= hsc($club['club_name']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
 
-                        <div class="event-modification-form-group"> <label for="modification-event-event_type-selection"
-                                class="event_modification-label">Type
+                        <div class="event__form-group"> <label for="event__type-selection"
+                                class="event__form-label">Type
                                 d'Evénement</label>
-                            <select name="event_type_id" id="modification-event-event_type-selection"
-                                class="event-modification-input">
+                            <select name="event_type_id" id="event__type-selection" class="event__form-input">
                                 <?php foreach ($eventTypes as $eventType): ?>
                                     <option value="<?= hsc($eventType['event_type_id']) ?>">
                                         <?= hsc($eventType['event_type_name']) ?>
@@ -241,12 +156,11 @@
                             </select>
                         </div>
 
-                        <div class="event-modification-form-group"> <label for="modification-event-team-selection"
-                                class="event_modification-label">Les équipes
+                        <div class="event__form-group"> <label for="event__team-selection" class="event__form-label">Les
+                                équipes
                                 participants</label>
-                            <div id="event-modification__chip-wrapper" class="event-modification__chip-wrapper"></div>
-                            <select name="teams_id[]" id="modification-event-team-selection"
-                                class="event-modification-input">
+                            <div id="event__chip-wrapper" class="event__chip-wrapper"></div>
+                            <select name="teams_id[]" id="event__team-selection" class="event__form-input">
                                 <option value="" disable>-- Sélection --</option>
                                 <?php foreach ($teams as $team): ?>
                                     <option value="<?= hsc($team['team_id']) ?>"><?= hsc($team['team_name']) ?></option>
@@ -254,23 +168,21 @@
                             </select>
                         </div>
 
-                        <div class="event-modification-form-group"> <label for="modification-event-event_date"
-                                class="event_modification-label">Date d'Evénement
+                        <div class="event__form-group"> <label for="event__date" class="event__form-label">Date
+                                d'Evénement
                             </label>
-                            <input type="datetime-local" id="modification-event-event_date" name="event_date"
-                                class="event-modification-input" />
+                            <input type="datetime-local" id="event__date" name="event_date" class="event__form-input" />
                         </div>
 
-                        <div class="event-modification-form-group"> <label for="modification-event-event_capacity"
-                                class="event_modification-label">Capacité
+                        <div class="event__form-group"> <label for="event__capacity" class="event__form-label">Capacité
                                 d'Evénement</label>
-                            <input type="number" id="modification-event-event_capacity" name="event_capacity" min="1"
-                                class="event-modification-input" />
+                            <input type="number" id="event__capacity" name="event_capacity" min="1"
+                                class="event__form-input" />
                         </div>
-                        <div class="event-modification-form-button-wrapper">
-                            <button type="submit" class="button-submit__modification-event-form">Modifier</button>
-                            <button type="close" class="button-annulation__modification-event-form"
-                                id="button-annulation__modification-event-form">Annuler</button>
+                        <div class="event__form-button-wrapper">
+                            <button type="submit" class="button__submit-event-form">Valider</button>
+                            <button type="close" class="button__annulation-event-form"
+                                id="button__annulation-event-form">Annuler</button>
 
                         </div>
                     </form>
