@@ -120,8 +120,6 @@ function closeEventForm() {
   document.removeEventListener("click", onEsc);
 }
 
-eventFormOverlayClose.addEventListener("click", closeEventForm);
-
 // fermeture du formulaire en appuyant echape
 
 function onEsc(e) {
@@ -129,6 +127,8 @@ function onEsc(e) {
     closeEventForm();
   }
 }
+
+eventFormOverlayClose.addEventListener("click", closeEventForm);
 
 // création de la pré-sélection des options de liste déroullant pour le formulaire de modification
 function selectDefaultOption(id, idSelect) {
@@ -139,6 +139,14 @@ function selectDefaultOption(id, idSelect) {
       break;
     }
   }
+}
+
+// Tri alphabétique des options après ajout
+function trierOptionsSelect(select) {
+  const options = Array.from(select.options);
+  options.sort((a, b) => a.text.localeCompare(b.text));
+  select.innerHTML = "";
+  options.forEach((opt) => select.appendChild(opt));
 }
 
 // création de la pré-sélection des chips pour le formulaire de modification
@@ -187,6 +195,9 @@ function selectDefaultOptionChips(ids) {
       newOption.value = value;
       newOption.textContent = label;
       select.appendChild(newOption);
+
+      // trie des options dans l'ordre alphabitic
+      trierOptionsSelect(select);
     });
 
     chip.appendChild(chipText);
@@ -219,6 +230,7 @@ function deleteOptionChips() {
   });
 
   chipsContainer.innerHTML = "";
+  trierOptionsSelect(select);
 }
 
 eventCreateFormOverlayOpen.addEventListener("click", openEventForm);
@@ -302,6 +314,7 @@ teamSelectChoices.addEventListener("change", function () {
     newOption.value = value;
     newOption.textContent = label;
     teamSelectChoices.appendChild(newOption);
+    trierOptionsSelect(teamSelectChoices);
   });
 
   chip.appendChild(chipText);
@@ -507,16 +520,11 @@ const msg = document.getElementById("event__message-wrapper");
 
 // Fonction de remove de flash messages
 if (msg) {
+  // remonter en haut de la page
+  window.scrollTo({ top: 0, behavior: "smooth" });
   setTimeout(() => {
-    console.log();
     msg.style.opacity = "0";
     msg.style.transition = "opacity 0.5s";
     setTimeout(() => msg.remove(), 500);
   }, 5000);
 }
-
-// // Tri alphabétique des options après ajout
-// const options = Array.from(select.options);
-// options.sort((a, b) => a.text.localeCompare(b.text));
-// select.innerHTML = ""; // vider
-// options.forEach(opt => select.appendChild(opt)); // réinsérer trié
