@@ -1,6 +1,6 @@
 <?php
 
-// recuperation des valeurs pour le formulaire de création d'evenement
+// recuperation des valeurs pour le formulaire de création et modification d'evenement
 
 $sql = "SELECT 
 club_id,
@@ -32,7 +32,7 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// gestion d'affichage et de modification des evenements
+// gestion d'affichage des evenements
 
 $sql = "SELECT 
 e.event_id, 
@@ -78,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     // Recuperation et nettoyage de données envoyé
     $action = $data['action'];
+    // Création de variable de date et l'heure actuelle pour faire protection de la logique métier
+    $dateTimeNow = new DateTime();
 
     switch ($action) {
         case "creation":
@@ -99,7 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 empty($eventTypeID) ||
                 empty($eventDate) ||
                 empty($eventCapacity) ||
-                empty($teams_id)
+                empty($teams_id) ||
+                $eventDate <= $dateTimeNow
             ) {
                 http_response_code(400);
             } else {
@@ -161,7 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 empty($eventTypeID) ||
                 empty($eventDate) ||
                 empty($eventCapacity) ||
-                empty($teams_id)
+                empty($teams_id) ||
+                $eventDate <= $dateTimeNow
             ) {
                 http_response_code(400);
             } else {

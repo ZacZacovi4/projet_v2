@@ -364,7 +364,7 @@ async function submitEventForm(event) {
     switch (status) {
       case 400:
         alert(
-          "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+          "Un ou plusieurs champs du formulaire sont vide ou ne sont pas remplis correctement (date, capacité)"
         );
         break;
       case 500:
@@ -400,7 +400,7 @@ async function submitEventForm(event) {
     switch (status) {
       case 400:
         alert(
-          "Un ou plusieurs champs du formulaire ne sont pas remplis correctement"
+          "Un ou plusieurs champs du formulaire sont vide ou ne sont pas remplis correctement (date, capacité)"
         );
         break;
       case 500:
