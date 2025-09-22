@@ -44,7 +44,7 @@
                 <li class="sidebar__menu-element">
                     <a href="index.php?page=payementMethod" class="menu__list-element-ref">
                         <i class="bx bxs-credit-card"></i>
-                        <span class="sidebar__nav-item">Moyens&nbspde&nbsppaiment</span>
+                        <span class="sidebar__nav-item">Moyens&nbspde&nbsppaiement</span>
                     </a>
                 </li>
                 <li class="sidebar__menu-element">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                     </div>
                     <div class="friend__element-reservations">
                         <button class="friend__element-reservations-btn">
-                            Reservations
+                            Modifier
                         </button>
                     </div>
                 </div>

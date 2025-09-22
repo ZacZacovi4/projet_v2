@@ -44,7 +44,7 @@
                 <li class="sidebar__menu-element">
                     <a href="index.php?page=payementMethod" class="menu__list-element-ref user__icone-active">
                         <i class="bx bxs-credit-card"></i>
-                        <span class="sidebar__nav-item">Moyens&nbspde&nbsppaiment</span>
+                        <span class="sidebar__nav-item">Moyens&nbspde&nbsppaiement</span>
                     </a>
                 </li>
                 <li class="sidebar__menu-element">

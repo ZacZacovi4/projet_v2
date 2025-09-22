@@ -101,8 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 empty($eventTypeID) ||
                 empty($eventDate) ||
                 empty($eventCapacity) ||
-                empty($teams_id) ||
-                $eventDate <= $dateTimeNow
+                empty($teams_id)
+                // $eventDate <= $dateTimeNow
             ) {
                 http_response_code(400);
             } else {
@@ -139,8 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 } catch (PDOException $e) {
                     http_response_code(500);
-                    $_SESSION['error'] = "Une erreur est survenue lors de la création
-                        d'événement.";
+                    $_SESSION['error'] = "Une erreur est survenue lors de la création d'événement.";
                 }
             }
             break;
@@ -164,8 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 empty($eventTypeID) ||
                 empty($eventDate) ||
                 empty($eventCapacity) ||
-                empty($teams_id) ||
-                $eventDate <= $dateTimeNow
+                empty($teams_id)
+                // $eventDate <= $dateTimeNow
             ) {
                 http_response_code(400);
             } else {
@@ -213,7 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     http_response_code(500);
                     $_SESSION['error'] = "Une erreur est survenue lors de la modification d'événement.";
-
                 }
             }
             break;
@@ -244,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt->execute($params);
                         http_response_code(200);
                         $_SESSION['message'] = "L'événement
-                        a été suprimé.";
+                        a été supprimé.";
                     }
                 } catch (PDOException $e) {
                     http_response_code(500);
@@ -260,8 +258,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $message = $_SESSION['message'] ?? '';
 $error = $_SESSION['error'] ?? '';
 unset($_SESSION['message'], $_SESSION['error']);
-
-
-
-
-

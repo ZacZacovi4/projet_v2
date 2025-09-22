@@ -65,12 +65,12 @@
             <?php if ($message || $error): ?>
                 <div class="event__message-wrapper" id="event__message-wrapper">
                     <?php if ($message): ?>
-                        <h3 class="event__message-success" id="event__message-success"><?= htmlspecialchars($message) ?></h3>
-                        <?php
+                        <h3 class="event__message-success" id="event__message-success"><?= hsc($message) ?></h3>
+                    <?php
                     endif; ?>
                     <?php if ($error): ?>
-                        <h3 class="event__message-error" id="event__message-error"><?= htmlspecialchars($error) ?></h3>
-                        <?php
+                        <h3 class="event__message-error" id="event__message-error"><?= hsc($error) ?></h3>
+                    <?php
                     endif; ?>
                 </div>
             <?php endif; ?>
@@ -95,29 +95,29 @@
                             <th class="admin_event-table-header">Equipes</th>
                             <th class="admin_event-table-header">Créateur</th>
                             <?php foreach ($events as $event): ?>
-                            <tr class="admin_event-table-fields" data-id="<?= $event['event_id']; ?>"
-                                data-date="<?= $event['event_date']; ?>" data-club-id="<?= $event['club_id']; ?>"
-                                data-club-name="<?= $event['club_name']; ?>" data-type-id="<?= $event['event_type_id']; ?>"
-                                data-type-name="<?= $event['event_type_name']; ?>"
-                                data-capacity="<?= $event['event_capacity']; ?>" data-teams-id="<?= $event['team_ids']; ?>"
-                                data-teams-name="<?= $event['team_names']; ?>">
+                        <tr class="admin_event-table-fields" data-id="<?= $event['event_id']; ?>"
+                            data-date="<?= $event['event_date']; ?>" data-club-id="<?= $event['club_id']; ?>"
+                            data-club-name="<?= $event['club_name']; ?>" data-type-id="<?= $event['event_type_id']; ?>"
+                            data-type-name="<?= $event['event_type_name']; ?>"
+                            data-capacity="<?= $event['event_capacity']; ?>" data-teams-id="<?= $event['team_ids']; ?>"
+                            data-teams-name="<?= $event['team_names']; ?>">
 
-                                <td class="admin_event-table-field"><?= $event["event_date"]; ?></td>
-                                <td class="admin_event-table-field"><?= $event["club_name"]; ?></td>
-                                <td class="admin_event-table-field"><?= $event["event_type_name"]; ?></td>
-                                <td class="admin_event-table-field"><?= $event["event_capacity"]; ?></td>
-                                <td class="admin_event-table-field"><?= "28"; ?></td>
-                                <td class="admin_event-table-field"><?= $event["team_names"]; ?></td>
-                                <td class="admin_event-table-field"><?= $event["user_first_name"]; ?></td>
-                                <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-modifier"
-                                        id="admin_event-table-field-modifier">&#9998;</a>
-                                </td>
-                                <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-deleter"
-                                        id="admin_event-table-field-deleter">&times;</a>
-                                </td>
+                            <td class="admin_event-table-field"><?= $event["event_date"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["club_name"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["event_type_name"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["event_capacity"]; ?></td>
+                            <td class="admin_event-table-field"><?= "28"; ?></td>
+                            <td class="admin_event-table-field"><?= $event["team_names"]; ?></td>
+                            <td class="admin_event-table-field"><?= $event["user_first_name"]; ?></td>
+                            <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-modifier"
+                                    id="admin_event-table-field-modifier">&#9998;</a>
+                            </td>
+                            <td class="admin_event-table-field"><a href="#" class="admin_event-table-field-deleter"
+                                    id="admin_event-table-field-deleter">&times;</a>
+                            </td>
 
-                            </tr>
-                        <?php endforeach ?>
+                        </tr>
+                    <?php endforeach ?>
                     </table>
                 </div>
             </div>

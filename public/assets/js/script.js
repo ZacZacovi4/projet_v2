@@ -235,7 +235,7 @@ function deleteOptionChips() {
 
 eventCreateFormOverlayOpen.addEventListener("click", openEventForm);
 
-// Recuperation des valeurs de l'evenement grace au atribut data
+// Recuperation des valeurs de l'evenement via la propriété .dataset
 document
   .querySelectorAll(".admin_event-table-field-modifier")
   .forEach((btn) => {
