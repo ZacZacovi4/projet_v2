@@ -26,6 +26,8 @@ $routes = [
       'reservationManagement' => ['model' => 'admin/reservationManagement', 'template' => 'admin/reservationManagement', 'auth' => true],
       'userManagement' => ['model' => 'admin/userManagement', 'template' => 'admin/userManagement', 'auth' => true],
       'logout' => ['model' => 'user/logout'],
+      '403' => ['template' => 'public/403'],
+      '404' => ['template' => 'public/404'],
 ];
 
 // Récupération du paramètre page, valeur par défaut “home” operateur de coalescence des nulls, ça remplace :
@@ -62,4 +64,3 @@ if (!empty($route["template"])) {
 
 // Inclusion du pied de page
 require_once __DIR__ . '/../template/partial/_footer.html.php';
-

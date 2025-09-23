@@ -1,5 +1,4 @@
 <?php
-// if (!isAdmin()) {
-//     redirect("index.php?page=403");
-// }
-
+if (!isAdmin()) {
+    redirect("index.php?page=403");
+}

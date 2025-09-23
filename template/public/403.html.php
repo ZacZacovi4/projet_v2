@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 
-<body>
+<main>
     <h1>Oups... Vous n'avez pas le droit d'accès à cette page !</h1>
-</body>
+</main>
 
 </html>

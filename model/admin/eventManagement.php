@@ -1,4 +1,8 @@
 <?php
+// controle de droit d'acces
+if (!isAdmin()) {
+    redirect("index.php?page=403");
+}
 
 // recuperation des valeurs pour le formulaire de création et modification d'evenement
 

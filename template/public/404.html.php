@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 
-<body>
+<main>
     <h1>Oups... la page n'existe pas !</h1>
-</body>
+</main>
 
 </html>
