@@ -132,7 +132,8 @@
                     </div>
 
                     <form id="event__form" class="event__overlay-form" onsubmit="submitEventForm(event)">
-                        <input type="hidden" name="event_id" value="">
+                        <input class="CSRF_token" type="hidden" name="token" value="<?= $csrfToken ?? '' ?>">
+                        <input class="event_id" type="hidden" name="event_id" value="">
                         <div class="event__form-group">
                             <label for="event__club-selection" class="event__form-label">Club
                                 d'Accueil
@@ -196,7 +197,8 @@
                     </div>
                     <form action="index.php?page=eventManagement" id="event-deletion__form"
                         class="event-deletion-overlay-form" method="POST" onsubmit="submitEventDeletionForm(event)">
-                        <input type="hidden" name="event_id" value="">
+                        <input class="CSRF_token" type="hidden" name="token" value="<?= $csrfToken ?? '' ?>">
+                        <input class="event_id" type="hidden" name="event_id" value="">
                         <div class="event-deletion-form-button-wrapper">
                             <button type="submit" class="button-submit__deletion-event-form">Valider</button>
                             <button type="close" class="button-annulation__deletion-event-form"

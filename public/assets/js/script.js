@@ -92,9 +92,10 @@ const eventForm = document.getElementById("event__form");
 function openEventForm(isEdit = false, eventID = null) {
   eventFormOverlay.classList.add("active");
   eventFormOverlay.setAttribute("aria-hidden", "false");
+
   // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
   if (isEdit) {
-    eventFormOverlay.querySelector("input").value = eventID;
+    eventFormOverlay.querySelector(".event_id").value = eventID;
   }
   // Ecouter la touche Échap
   document.addEventListener("keydown", onEsc);
@@ -103,6 +104,7 @@ function openEventForm(isEdit = false, eventID = null) {
 function AnnulEventForm(e) {
   e.preventDefault();
   eventForm.reset();
+  deleteOptionChips();
   eventFormOverlay.classList.remove("active");
   eventFormOverlay.setAttribute("aria-hidden", "true");
   document.removeEventListener("click", onEsc);
@@ -111,9 +113,10 @@ function AnnulEventForm(e) {
 eventFormOverlayAnnul.addEventListener("click", AnnulEventForm);
 
 function closeEventForm() {
-  eventForm
-    .querySelectorAll("input, textarea, select")
-    .forEach((el) => (el.value = ""));
+  eventForm.reset();
+  // eventForm
+  //   .querySelectorAll("input, textarea, select")
+  //   .forEach((el) => (el.value = ""));
   deleteOptionChips();
   eventFormOverlay.classList.remove("active");
   eventFormOverlay.setAttribute("aria-hidden", "true");
@@ -434,7 +437,7 @@ function openEventDeletionForm(eventID) {
   eventDeletionFormOverlay.classList.add("active");
   eventDeletionFormOverlay.setAttribute("aria-hidden", "false");
   // recuperation du premiere balise Input du formulaire et l'attribution de la valeure du event_id pour l'utilisation dans notre fonction plus tard
-  eventDeletionFormOverlay.querySelector("input").value = eventID;
+  eventDeletionFormOverlay.querySelector(".event_id").value = eventID;
 }
 
 function AnnulEventDeletionForm(e) {

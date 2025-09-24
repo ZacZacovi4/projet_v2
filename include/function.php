@@ -26,3 +26,9 @@ function hsc($string)
 {
     return (is_null($string) ? "" : htmlspecialchars($string));
 }
+
+function token()
+{
+    $csrfToken = bin2hex(random_bytes(32));
+    return $csrfToken;
+}

@@ -4,6 +4,12 @@ if (!isAdmin()) {
     redirect("index.php?page=403");
 }
 
+// génération du token CSRF
+if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = token();
+}
+$csrfToken = $_SESSION['token'] ?? null;
+
 // recuperation des valeurs pour le formulaire de création et modification d'evenement
 
 $sql = "SELECT 
@@ -80,11 +86,15 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // reçoit json de front avec les champs de formulaire et le decode
     $data = json_decode(file_get_contents('php://input'), true);
+    $tokenForm = $data['token'];
+
+    if (!$tokenForm || $tokenForm !== $csrfToken) {
+        redirect("index.php?page=403");
+    }
     // Recuperation et nettoyage de données envoyé
     $action = $data['action'];
     // Création de variable de date et l'heure actuelle pour faire protection de la logique métier
     $dateTimeNow = new DateTime();
-
     switch ($action) {
         case "creation":
 
@@ -97,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data['teams_id[]'] = [$data['teams_id[]']];
             }
             $teams_id = array_filter($data['teams_id[]'], fn($v) => $v !== '');
-
 
             // Verification si on a bien reçu des données de nos champs
             if (
