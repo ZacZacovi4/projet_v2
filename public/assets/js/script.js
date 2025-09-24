@@ -65,12 +65,12 @@ hamburger.addEventListener("click", changeToCross);
 // // Changer de slide toutes les 5 secondes (5000 millisecondes)
 // setInterval(autoSlide, 5000);
 
-// let btn_sidebar = document.querySelector("#sidebar__btn");
-// let sidebar = document.querySelector(".user__sidebar");
+let btn_sidebar = document.querySelector("#sidebar__btn");
+let sidebar = document.querySelector(".user__sidebar");
 
-// btn_sidebar.onclick = function () {
-//   sidebar.classList.toggle("active");
-// };
+btn_sidebar.onclick = function () {
+  sidebar.classList.toggle("active");
+};
 
 // =============================
 // ==== GESTION EVENEMENTS =====

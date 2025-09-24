@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     $tokenForm = $data['token'];
 
+    // vérification du token CSRF
     if (!$tokenForm || $tokenForm !== $csrfToken) {
         redirect("index.php?page=403");
     }

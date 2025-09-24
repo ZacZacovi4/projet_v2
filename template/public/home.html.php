@@ -4,13 +4,13 @@
     <button class="btn__carousel" id="next">&#10097;</button>
     <ul>
       <li class="slide__carousel">
-        <img class="slide__carousel-image" src="assets/images/img_carousel_1.webp" alt="" />
+        <img class="slide__carousel-image" src="assets/images/img_carousel_1.webp" alt="première image de carrousel" />
       </li>
       <li class="slide__carousel active">
-        <img class="slide__carousel-image" src="assets/images/img_carousel_5.jpg" alt="" />
+        <img class="slide__carousel-image" src="assets/images/img_carousel_5.jpg" alt="deuxième image de carrousel" />
       </li>
       <li class="slide__carousel">
-        <img class="slide__carousel-image" src="assets/images/img_carousel_6.avif" alt="" />
+        <img class="slide__carousel-image" src="assets/images/img_carousel_6.avif" alt="troisième image de carrousel" />
       </li>
     </ul>
   </div>
