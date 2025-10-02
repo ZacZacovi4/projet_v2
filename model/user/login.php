@@ -11,11 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user["user_password"])) {
-        // $_SESSION["user"] = [
-        //     "id" => $user["user_id"],
-        //     "role" => $user["role_id"],
-        //     "first_name" => $user["user_first_name"],
-        // ];
         $_SESSION["user_id"] = $user["user_id"];
         $_SESSION["role"] = $user["role_id"];
         $_SESSION["first_name"] = $user["user_first_name"];
@@ -24,4 +19,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Identifiant ou mot de passe incorrect";
     }
 }
-

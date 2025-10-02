@@ -26,7 +26,9 @@
                 </button>
                 <!-- Nom du site ou logo cliquable -->
                 <div class="navbar__brand">
-                    <a href="index.php?page=home">Logo</a>
+                    <a href="index.php?page=home">
+                        <img class="navbar__logo" src="assets/images/logo_club.svg" alt="Logo du club">
+                    </a>
                 </div>
                 <!-- Menu principal avec ancres vers les sections -->
                 <ul class="navbar__menu">

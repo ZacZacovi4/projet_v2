@@ -58,6 +58,10 @@ li {
   margin-right: 20px;
 }
 
+.navbar__logo {
+  display: none;
+}
+
 /* à effacer plus tard */
 
 .navbar__brand a {
@@ -428,6 +432,14 @@ li {
   .navbar__toggler {
     display: none;
   }
+  .navbar__logo {
+    display: block;
+    height: 31px;
+    width: auto;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   .navbar__item {
     border-top: none;
   }
@@ -442,6 +454,15 @@ li {
     max-width: 100px;
     cursor: pointer;
     margin: 0 20px;
+  }
+
+  .footer__logo {
+    display: block;
+    height: 18px;
+    width: auto;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

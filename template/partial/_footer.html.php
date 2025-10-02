@@ -3,7 +3,9 @@
     <div class="footer__content container">
         <!-- Logo pied de page -->
         <div class="footer__brand">
-            <a href="index.php?page=home">Logo</a>
+            <a href="index.php?page=home">
+                <img class="footer__logo" src="assets/images/logo_club.svg" alt="Logo du club">
+            </a>
         </div>
 
         <!-- Icônes des réseaux sociaux -->
