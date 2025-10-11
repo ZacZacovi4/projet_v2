@@ -36,7 +36,10 @@ $page = $_GET['page'] ?? 'home';
 
 // Si la route n’existe pas → 404
 if (!isset($routes[$page])) {
-      include __DIR__ . '/../template/public/404.html.php';
+      require_once __DIR__ . '/../template/partial/_header.html.php';
+      require_once __DIR__ . '/../template/public/404.html.php';
+      require_once __DIR__ . '/../template/partial/_footer.html.php';
+      exit;
 }
 
 $route = $routes[$page];
@@ -47,6 +50,7 @@ if (
       && !isLoggedIn()
 ) {
       redirect("index.php?page=login");
+      exit;
 }
 
 // Inclusion du modèle
