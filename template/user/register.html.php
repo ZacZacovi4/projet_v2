@@ -7,7 +7,7 @@
           Veillez remplir le formulaire d'inscription
         </p>
       </div>
-      <form action="#" method="post" class="login__form">
+      <form action="index.php?page=register" method="post" class="login__form">
         <div class="inscription__form-group">
           <div class="inscription__form-group-wrapper">
             <div class="inscription__form-group-name">
