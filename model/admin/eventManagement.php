@@ -103,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $clubID = $data['club_id'];
             $eventTypeID = $data['event_type_id'];
             $eventDate = $data['event_date'];
+            // on transforme la date en objet date avec le bon format pour pouvoir la comparer avec la date de maintenant
             $eventDateCompare = DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $data['event_date'], $timeZone);
             $eventCapacity = $data['event_capacity'];
             // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
