@@ -7,6 +7,8 @@
           Veillez remplir le formulaire d'inscription
         </p>
       </div>
+      <?php if (isset($error))
+        echo "<p>" . hsc($error) . "</p>"; ?>
       <form action="index.php?page=register" method="post" class="login__form">
         <div class="inscription__form-group">
           <div class="inscription__form-group-wrapper">

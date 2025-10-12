@@ -15,24 +15,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         !filter_var($email, FILTER_VALIDATE_EMAIL) ||
         !($password === $passwordConf)
     ) {
-        echo ('problème');
-        exit();
-    }
-
-    try {
-        $sql = 'INSERT INTO users
+        $error = "Vous avez mal rempli les champs";
+    } else {
+        try {
+            $sql = 'INSERT INTO users
         (user_first_name, user_last_name, user_email, user_password, role_id) VALUES (:user_first_name, :user_last_name, :user_email, :user_password, :role_id)';
-        $stmt = $db->prepare($sql);
-        $params = [
-            ':user_first_name' => $firstName,
-            ':user_last_name' => $lastName,
-            ':user_email' => $email,
-            ':user_password' => password_hash($password, PASSWORD_DEFAULT),
-            ':role_id' => 3
-        ];
-        $stmt->execute($params);
-    } catch (PDOException $e) {
-        exit();
+            $stmt = $db->prepare($sql);
+            $params = [
+                ':user_first_name' => $firstName,
+                ':user_last_name' => $lastName,
+                ':user_email' => $email,
+                ':user_password' => password_hash($password, PASSWORD_DEFAULT),
+                ':role_id' => 3
+            ];
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            exit();
+        }
+        redirect('index.php?page=login');
     }
-    redirect('index.php?page=login');
 }
