@@ -95,13 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recuperation et nettoyage de données envoyé
     $action = $data['action'];
     // Création de variable de date et l'heure actuelle pour faire protection de la logique métier
-    $dateTimeNow = new DateTime();
+    $timeZone   = new DateTimeZone('Europe/Paris');
+    $dateTimeNow = new DateTimeImmutable('now', $timeZone);
     switch ($action) {
         case "creation":
 
             $clubID = $data['club_id'];
             $eventTypeID = $data['event_type_id'];
             $eventDate = $data['event_date'];
+            $eventDateCompare = DateTimeImmutable::createFromFormat('Y-m-d\TH:i', $data['event_date'], $timeZone);
             $eventCapacity = $data['event_capacity'];
             // on peut utiliser array_filter par sans des paramétres suplementaires, car par defalut elle va filtrer 0, false, null, "" etc.
             if (!is_array($data['teams_id[]'])) {
@@ -115,8 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 empty($eventTypeID) ||
                 empty($eventDate) ||
                 empty($eventCapacity) ||
-                empty($teams_id)
-                // $eventDate <= $dateTimeNow
+                empty($teams_id) ||
+                $eventDateCompare <= $dateTimeNow
             ) {
                 http_response_code(400);
             } else {
