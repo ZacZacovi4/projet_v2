@@ -43,7 +43,7 @@ hamburger.addEventListener("click", changeToCross);
 //     const calcNextSlide = e.target.id === "next" ? 1 : -1;
 //     const slideActive = document.querySelector(".active");
 
-//     newIndex = calcNextSlide + [...slides].indexOf(slideActive);
+//     let newIndex = calcNextSlide + [...slides].indexOf(slideActive);
 
 //     if (newIndex < 0) newIndex = [...slides].length - 1;
 //     if (newIndex >= [...slides].length) newIndex = 0;
